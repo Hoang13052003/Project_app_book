@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imgAvatarBook"
+        android:layout_width="141dp"
+        android:layout_height="212dp"
+        android:padding="2dp"
+        android:scaleType="centerCrop"
+        android:background="@drawable/boder_radius"
+        android:src="@drawable/sach"
+        android:layout_marginRight="10dp"
+        app:shapeAppearanceOverlay="@style/boder_raius"
+        />
+
+</LinearLayout>
