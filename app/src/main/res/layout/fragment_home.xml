@@ -338,20 +338,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginTop="10dp"
             android:padding="10dp">
             <TextView
-                android:layout_width="293dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="Danh Mục Sách"
-                android:textSize="20sp"
+                android:textSize="30sp"
                 android:textStyle="bold" />
 
             <ListView
                 android:id="@+id/lvCategoryBook"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="480dp"
+                android:scrollbars="horizontal"
+                />
         </LinearLayout>
 
         </LinearLayout>

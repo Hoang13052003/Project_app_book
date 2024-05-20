@@ -3,4 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="background_Toolbal">#5AB2FF</color>
+    <color name="background_gradient_start">#7469B6</color> <!-- Màu bắt đầu của gradient -->
+    <color name="background_gradient_end">#AD88C6</color>
+
 </resources>

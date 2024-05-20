@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,8 +22,10 @@ import java.util.ArrayList;
 public class FragmentHome extends Fragment {
     private ImageView imageViewAnh;
     private ArrayList<Book> listBook;
-    private RecyclerView recycler_view;
-    private RecyclerView recycler_view_Moi_XB, recycler_view2, recycler_view3;
+    private ArrayList<CategoryBook> listCategoryBook;
+    private RecyclerView recycler_view, recycler_view_Moi_XB, recycler_view2, recycler_view3;
+
+    private ListView lvCategoryBook;
 
     public FragmentHome() {
         // Required empty public constructor
@@ -36,11 +39,15 @@ public class FragmentHome extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
         imageViewAnh = (ImageView) view.findViewById(R.id.imgBook);
         imageViewAnh.setImageResource(R.drawable.sach);
+
         recycler_view = view.findViewById(R.id.recycler_view);
         recycler_view_Moi_XB = view.findViewById(R.id.recycler_view_Moi_XB);
         recycler_view2 = view.findViewById(R.id.recycler_view2);
         recycler_view3 = view.findViewById(R.id.recycler_view3);
-        // Initialize the listBook ArrayList
+
+        lvCategoryBook = view.findViewById(R.id.lvCategoryBook);
+
+        // danh sách Book
         listBook = new ArrayList<>();
         listBook.add(new Book("sach"));
         listBook.add(new Book("sach1"));
@@ -58,7 +65,18 @@ public class FragmentHome extends Fragment {
         recycler_view2.setAdapter(bookRecyclerAdapter);
         recycler_view3.setAdapter(bookRecyclerAdapter);
 
+        // dach sách danh mục
+        listCategoryBook = new ArrayList<>();
+        listCategoryBook.add(new CategoryBook("Kinh doanh", "ic_kinhdoanh"));
+        listCategoryBook.add(new CategoryBook("Văn học", "ic_vanhoc"));
+        listCategoryBook.add(new CategoryBook("Tâm linh - Tôn giáo", "ic_tamlin_tongiao"));
+        listCategoryBook.add(new CategoryBook("Tư duy", "ic_tuduy"));
+        listCategoryBook.add(new CategoryBook("Kỹ năng", "ic_kynang"));
+        listCategoryBook.add(new CategoryBook("Tâm lý hoc", "ic_tamlyhoc"));
 
+
+        CategoryBookAdapter categoryBookAdapter = new CategoryBookAdapter(getActivity(), R.layout.layout_row_category_book, listCategoryBook);
+        lvCategoryBook.setAdapter(categoryBookAdapter);
         return view;
     }
 }
