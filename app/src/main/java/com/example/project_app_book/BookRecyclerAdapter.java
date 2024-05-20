@@ -1,28 +1,26 @@
 package com.example.project_app_book;
 
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
-import com.bumptech.glide.Glide;
-public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapter.ViewHolder>{
+
+public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapter.ViewHolder> {
 
     private ArrayList<Book> bookList;
     private Context context;
-
+    private int layoutResource;
 
     // Constructor
-    public BookRecyclerAdapter(Context context, ArrayList<Book> bookList) {
+    public BookRecyclerAdapter(Context context, ArrayList<Book> bookList, int layoutResource) {
         this.context = context;
         this.bookList = bookList;
+        this.layoutResource = layoutResource;
     }
 
     // ViewHolder class
@@ -39,7 +37,7 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_colum_book, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(layoutResource, parent, false);
         return new ViewHolder(itemView);
     }
 

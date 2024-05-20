@@ -22,7 +22,7 @@ public class FragmentHome extends Fragment {
     private ImageView imageViewAnh;
     private ArrayList<Book> listBook;
     private RecyclerView recycler_view;
-    private RecyclerView recycler_view1, recycler_view2;
+    private RecyclerView recycler_view_Moi_XB, recycler_view2, recycler_view3;
 
     public FragmentHome() {
         // Required empty public constructor
@@ -37,8 +37,9 @@ public class FragmentHome extends Fragment {
         imageViewAnh = (ImageView) view.findViewById(R.id.imgBook);
         imageViewAnh.setImageResource(R.drawable.sach);
         recycler_view = view.findViewById(R.id.recycler_view);
-        recycler_view1 = view.findViewById(R.id.recycler_view1);
+        recycler_view_Moi_XB = view.findViewById(R.id.recycler_view_Moi_XB);
         recycler_view2 = view.findViewById(R.id.recycler_view2);
+        recycler_view3 = view.findViewById(R.id.recycler_view3);
         // Initialize the listBook ArrayList
         listBook = new ArrayList<>();
         listBook.add(new Book("sach"));
@@ -48,10 +49,14 @@ public class FragmentHome extends Fragment {
         listBook.add(new Book("sach2"));
 
         // Set the adapter
-        BookRecyclerAdapter bookRecyclerAdapter = new BookRecyclerAdapter(getContext(), listBook);
-        recycler_view.setAdapter(bookRecyclerAdapter);
-        recycler_view1.setAdapter(bookRecyclerAdapter);
+//        recycler_view.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        BookRecyclerAdapter bookRecyclerAdapter = new BookRecyclerAdapter(getActivity(), listBook, R.layout.layout_item_colum_book);
+        BookRecyclerAdapter bookRecyclerAdapterTopBook = new BookRecyclerAdapter(getActivity(), listBook, R.layout.layout_item_colum_book_popular);
+        BookRecyclerAdapter bookRecyclerAdapterNewBook = new BookRecyclerAdapter(getActivity(), listBook, R.layout.layout_item_colum_book_3_row);
+        recycler_view.setAdapter(bookRecyclerAdapterTopBook);
+        recycler_view_Moi_XB.setAdapter(bookRecyclerAdapterNewBook);
         recycler_view2.setAdapter(bookRecyclerAdapter);
+        recycler_view3.setAdapter(bookRecyclerAdapter);
 
 
         return view;

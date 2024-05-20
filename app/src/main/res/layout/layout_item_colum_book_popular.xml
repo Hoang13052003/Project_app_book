@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgAvatarBook"
+            android:layout_width="151dp"
+            android:layout_height="202dp"
+            android:background="@drawable/boder_radius"
+            android:padding="15dp"
+
+            android:scaleType="centerCrop"
+            android:src="@drawable/sach"
+            app:shapeAppearanceOverlay="@style/boder_raius" />
+
+        <TextView
+            android:id="@+id/tvNumberTopbook"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="75dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/background_boder_radius_number_top_book"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+</LinearLayout>
