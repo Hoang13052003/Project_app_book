@@ -1,7 +1,6 @@
 package com.example.project_app_book;
 
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -24,8 +23,8 @@ public class Main extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         addControls();
-        actionBar = ( androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbarBai1);
-        setSupportActionBar(actionBar);
+//        actionBar = ( androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbarBai1);
+//        setSupportActionBar(actionBar);
         addEvents();
     }
     void addControls()
@@ -42,15 +41,15 @@ public class Main extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
 
-                if (item.getItemId() == R.id.btnChucNang1) {
+                if (item.getItemId() == R.id.btnHome) {
                     loadFragment(new FragmentHome());
                     return true;
                 }
-                if (item.getItemId() == R.id.btnChucNang2) {
+                if (item.getItemId() == R.id.btnCompass) {
                     loadFragment(new FragmentHome());
                     return true;
                 }
-                if (item.getItemId() == R.id.btnChucNang3) {
+                if (item.getItemId() == R.id.btnUser) {
                     loadFragment(new FragmentHome());
                     return true;
                 }

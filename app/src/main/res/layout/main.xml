@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cardview_dark_background"
-    tools:context=".MainActivity">
+    android:background="@color/white"
+    tools:context=".Main">
 
     <FrameLayout
 
@@ -14,21 +14,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbarBai1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#2BDAF1"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme" />
+<!--        <androidx.appcompat.widget.Toolbar-->
+<!--            android:id="@+id/toolbarBai1"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="#2BDAF1"-->
+<!--            android:minHeight="?attr/actionBarSize"-->
+<!--            android:theme="?attr/actionBarTheme" />-->
 
         <FrameLayout
             android:id="@+id/fragLayoutLoad"
-            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="60dp"
-            android:layout_marginTop="60dp">
+            android:layout_marginBottom="80dp"
+            android:background="@color/white">
 
         </FrameLayout>
 

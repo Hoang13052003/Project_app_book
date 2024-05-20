@@ -93,22 +93,13 @@
 
                     <TextView
                         android:id="@+id/tvTittle"
-                        android:layout_width="293dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Best Selling"
+                        android:text="What are you reading Today?"
                         android:textSize="20sp"
                         android:textStyle="bold" />
-
-                    <Button
-                        android:id="@+id/btnShowAll"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:backgroundTint="@color/white"
-                        android:text="See All"
-                        android:textColor="@color/black" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -119,6 +110,8 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             </LinearLayout>
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="284dp"
@@ -151,6 +144,45 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="212dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="284dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvTittle2"
+                        android:layout_width="293dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="Best Author"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/btnShowAll2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/white"
+                        android:text="See All"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view2"
                     android:layout_width="match_parent"
                     android:layout_height="212dp"
                     android:orientation="horizontal"

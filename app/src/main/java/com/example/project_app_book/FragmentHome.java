@@ -22,7 +22,7 @@ public class FragmentHome extends Fragment {
     private ImageView imageViewAnh;
     private ArrayList<Book> listBook;
     private RecyclerView recycler_view;
-    private RecyclerView recycler_view1;
+    private RecyclerView recycler_view1, recycler_view2;
 
     public FragmentHome() {
         // Required empty public constructor
@@ -38,6 +38,7 @@ public class FragmentHome extends Fragment {
         imageViewAnh.setImageResource(R.drawable.sach);
         recycler_view = view.findViewById(R.id.recycler_view);
         recycler_view1 = view.findViewById(R.id.recycler_view1);
+        recycler_view2 = view.findViewById(R.id.recycler_view2);
         // Initialize the listBook ArrayList
         listBook = new ArrayList<>();
         listBook.add(new Book("sach"));
@@ -50,6 +51,7 @@ public class FragmentHome extends Fragment {
         BookRecyclerAdapter bookRecyclerAdapter = new BookRecyclerAdapter(getContext(), listBook);
         recycler_view.setAdapter(bookRecyclerAdapter);
         recycler_view1.setAdapter(bookRecyclerAdapter);
+        recycler_view2.setAdapter(bookRecyclerAdapter);
 
 
         return view;
