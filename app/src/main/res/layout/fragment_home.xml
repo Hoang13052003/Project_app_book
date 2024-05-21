@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E9F6FF"
-    tools:context=".FragmentHome">
+    tools:context=".view.FragmentHome">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -83,7 +83,7 @@
                             android:background="@drawable/boder_radius"
                             android:clipToOutline="true"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/sach" />
+                            android:src="@drawable/sach3" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -134,7 +134,7 @@
                             android:background="@drawable/boder_radius"
                             android:clipToOutline="true"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/sach1" />
+                            android:src="@drawable/sach4" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -192,7 +192,7 @@
                     android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view"
+                    android:id="@+id/recycler_view_top_book"
                     android:layout_width="match_parent"
                     android:layout_height="212dp"
                     android:orientation="horizontal"
@@ -245,7 +245,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="284dp"
+                android:layout_height="213dp"
                 android:orientation="vertical"
                 android:padding="10dp">
 
@@ -260,7 +260,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="Best Author"
+                        android:text="Tác giả xuất sắc nhất"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -275,9 +275,9 @@
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view2"
+                    android:id="@+id/recycler_view_author"
                     android:layout_width="match_parent"
-                    android:layout_height="212dp"
+                    android:layout_height="141dp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
@@ -332,7 +332,7 @@
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view3"
+                    android:id="@+id/recycler_view_kham_pha_english_book"
                     android:layout_width="match_parent"
                     android:layout_height="212dp"
                     android:orientation="horizontal"

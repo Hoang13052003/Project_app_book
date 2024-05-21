@@ -17,7 +17,7 @@
             android:padding="15dp"
 
             android:scaleType="centerCrop"
-            android:src="@drawable/sach"
+            android:src="@drawable/sach19"
             app:shapeAppearanceOverlay="@style/boder_raius" />
 
         <TextView

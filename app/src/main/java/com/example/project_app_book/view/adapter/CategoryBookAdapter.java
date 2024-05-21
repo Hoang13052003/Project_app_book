@@ -1,4 +1,4 @@
-package com.example.project_app_book;
+package com.example.project_app_book.view.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.project_app_book.R;
+import com.example.project_app_book.model.CategoryBook;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.example.project_app_book;
+package com.example.project_app_book.view.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -8,6 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.project_app_book.R;
+import com.example.project_app_book.model.Book;
+
 import java.util.ArrayList;
 
 public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapter.ViewHolder> {

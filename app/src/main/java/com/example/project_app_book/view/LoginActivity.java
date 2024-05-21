@@ -1,4 +1,4 @@
-package com.example.project_app_book;
+package com.example.project_app_book.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,8 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import java.security.PrivateKey;
-import java.util.PrimitiveIterator;
+import com.example.project_app_book.R;
 
 public class LoginActivity extends AppCompatActivity {
     private Button btnBatDau, btnLogin;

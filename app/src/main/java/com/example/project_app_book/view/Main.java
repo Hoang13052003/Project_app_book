@@ -1,4 +1,4 @@
-package com.example.project_app_book;
+package com.example.project_app_book.view;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
+import com.example.project_app_book.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 

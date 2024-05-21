@@ -1,4 +1,4 @@
-package com.example.project_app_book;
+package com.example.project_app_book.model;
 
 public class CategoryBook {
     private String name, img;

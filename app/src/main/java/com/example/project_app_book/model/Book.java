@@ -1,4 +1,4 @@
-package com.example.project_app_book;
+package com.example.project_app_book.model;
 
 import java.util.Map;
 

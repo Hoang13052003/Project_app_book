@@ -14,7 +14,7 @@
         android:padding="2dp"
         android:scaleType="centerCrop"
         android:background="@drawable/boder_radius"
-        android:src="@drawable/sach"
+        android:src="@drawable/sach19"
         android:layout_marginRight="10dp"
         app:shapeAppearanceOverlay="@style/boder_raius"
         />

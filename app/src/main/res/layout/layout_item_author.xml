@@ -6,15 +6,12 @@
     android:orientation="vertical">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/imgAvatarBook"
+        android:id="@+id/imgAvatarAuthor"
         android:layout_width="141dp"
-        android:layout_height="212dp"
+        android:layout_height="141dp"
         android:padding="2dp"
         android:scaleType="centerCrop"
-        android:background="@drawable/boder_radius"
-        android:src="@drawable/sach19"
+        android:src="@drawable/pc"
         android:layout_marginRight="10dp"
-        app:shapeAppearanceOverlay="@style/boder_raius"
-        />
-
+        app:shapeAppearanceOverlay="@style/circular"/>
 </LinearLayout>
