@@ -13,24 +13,24 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
-public class CategoryBookAdapter extends ArrayAdapter {
-    Context context;
-    ArrayList<CategoryBook> arrayList;
-    int layout;
-    public CategoryBookAdapter(@NonNull Context context, int resource, @NonNull
-    ArrayList<CategoryBook> objects) {
+public class CategoryBookAdapter extends ArrayAdapter<CategoryBook> {
+    private Context context;
+    private ArrayList<CategoryBook> arrayList;
+    private int layout;
+
+    public CategoryBookAdapter(@NonNull Context context, int resource, @NonNull ArrayList<CategoryBook> objects) {
         super(context, resource, objects);
         this.context = context;
         this.arrayList = objects;
         this.layout = resource;
     }
+
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull
-    ViewGroup parent) {
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         CategoryBook categoryBook = arrayList.get(position);
-        if(convertView == null){
-            convertView = LayoutInflater.from(context).inflate(layout,null);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(layout, parent, false);
         }
         ImageView img = convertView.findViewById(R.id.imgCategoryBook);
         int resourceId = context.getResources().getIdentifier(categoryBook.getImg(), "drawable", context.getPackageName());

@@ -12,7 +12,8 @@
 
         android:id="@+id/frameFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
 <!--        <androidx.appcompat.widget.Toolbar-->
 <!--            android:id="@+id/toolbarBai1"-->
@@ -26,7 +27,6 @@
             android:id="@+id/fragLayoutLoad"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="80dp"
             android:background="@color/white">
 
         </FrameLayout>
@@ -37,9 +37,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             app:menu="@menu/menu_nv_control"
-            app:itemTextColor="#000"
-            app:itemIconTint="#000"
-            app:itemRippleColor="#FF9800"
-            android:background="#fff"/>
+            app:itemActiveIndicatorStyle="@drawable/bottom_nav_item_background"
+            app:itemTextColor="@color/bottom_nav_text_color"
+            app:itemIconTint="@color/bottom_nav_icon_color"
+            app:itemRippleColor="#2A629A"
+            android:background="@drawable/background_radius_bottom_navigation"
+            />
+
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

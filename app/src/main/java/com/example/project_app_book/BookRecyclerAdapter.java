@@ -45,7 +45,7 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Book book = bookList.get(position);
 
-        @SuppressLint("DiscouragedApi") int resourceId = context.getResources().getIdentifier(book.getImg(), "drawable", context.getPackageName());
+        @SuppressLint("DiscouragedApi") int resourceId = context.getResources().getIdentifier(book.getImage(), "drawable", context.getPackageName());
         holder.imgAvatarBook.setImageResource(resourceId);
     }
 
