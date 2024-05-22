@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.project_app_book.OnItemClickListener;
 import com.example.project_app_book.R;
 import com.example.project_app_book.model.Book;
 
@@ -20,11 +21,23 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
     private Context context;
     private int layoutResource;
 
+    private OnItemClickListener listener;
+
     // Constructor
     public BookRecyclerAdapter(Context context, ArrayList<Book> bookList, int layoutResource) {
         this.context = context;
         this.bookList = bookList;
         this.layoutResource = layoutResource;
+    }
+
+    // 2. Interface để xử lý sự kiện nhấn vào mục
+    public interface OnItemClickListener {
+        void onItemClick(Book book);
+    }
+
+    // 3. Phương thức để thiết lập listener
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 
     // ViewHolder class
@@ -34,6 +47,18 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
         public ViewHolder(View itemView) {
             super(itemView);
             imgAvatarBook = itemView.findViewById(R.id.imgAvatarBook);
+            // 4. Thiết lập sự kiện nhấn vào mục
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(bookList.get(position));
+                        }
+                    }
+                }
+            });
         }
     }
 

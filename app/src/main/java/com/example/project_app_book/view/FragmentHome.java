@@ -5,14 +5,13 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -29,12 +28,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 public class FragmentHome extends Fragment {
-    private ImageView imageViewAnh;
+//    private ImageView imageViewAnh;
     private ArrayList<Book> listBook = new ArrayList<>();
     private ArrayList<CategoryBook> listCategoryBook = new ArrayList<>();
     private ArrayList<Author> listAuthor = new ArrayList<>();
@@ -59,7 +56,7 @@ public class FragmentHome extends Fragment {
     }
 
     private void addControls(View view){
-        imageViewAnh = (ImageView) view.findViewById(R.id.imgBook);
+//        imageViewAnh = (ImageView) view.findViewById(R.id.imgBook);
 
         recycler_view_top_book = view.findViewById(R.id.recycler_view_top_book);
         recycler_view_Moi_XB = view.findViewById(R.id.recycler_view_Moi_XB);
@@ -113,6 +110,19 @@ public class FragmentHome extends Fragment {
 
                     AuthorRecyclerAdapter authorRecyclerAdapter = new AuthorRecyclerAdapter(getActivity(), listAuthor, R.layout.layout_item_author);
                     recycler_view_author.setAdapter(authorRecyclerAdapter);
+                    bookRecyclerAdapterTopBook.setOnItemClickListener(new BookRecyclerAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Book book) {
+//                            FragmentDetailBook fragmentDetailBook = FragmentDetailBook.newInstance(String.valueOf(book.getAuthorId()));
+                            FragmentDetailBook fragmentDetailBook = FragmentDetailBook.newInstance(book.getImage());
+
+                            // Thực hiện việc chuyển đổi fragment
+                            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                            transaction.replace(R.id.fragLayoutLoad, fragmentDetailBook); // fragment_container là id của FrameLayout trong activity_main.xml
+                            transaction.addToBackStack(null); // thêm transaction vào back stack để có thể quay lại fragment trước đó
+                            transaction.commit();
+                        }
+                    });
                 } else {
                     // Xử lý lỗi
                     Toast.makeText(getActivity(), "Failed to load data.", Toast.LENGTH_SHORT).show();
@@ -138,5 +148,4 @@ public class FragmentHome extends Fragment {
         lvCategoryBook.setAdapter(categoryBookAdapter);
 
     }
-
 }
