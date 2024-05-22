@@ -14,7 +14,7 @@ import com.example.project_app_book.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-public class Main extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     androidx.appcompat.widget.Toolbar actionBar;
     BottomNavigationView bottomNavigationView;
@@ -22,7 +22,7 @@ public class Main extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.activity_main);
         addControls();
 //        actionBar = ( androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbarBai1);
 //        setSupportActionBar(actionBar);

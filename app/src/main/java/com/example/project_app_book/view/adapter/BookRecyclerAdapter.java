@@ -53,9 +53,11 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
         holder.imgAvatarBook.setImageResource(resourceId);
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return bookList.size();
     }
+
+
+
 }

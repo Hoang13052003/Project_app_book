@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -120,7 +121,9 @@ public class FragmentHome extends Fragment {
         });
 
 
-//
+
+
+
         // dach sách danh mục
         listCategoryBook = new ArrayList<>();
         listCategoryBook.add(new CategoryBook("Kinh doanh", "ic_kinhdoanh"));
@@ -135,4 +138,5 @@ public class FragmentHome extends Fragment {
         lvCategoryBook.setAdapter(categoryBookAdapter);
 
     }
+
 }
