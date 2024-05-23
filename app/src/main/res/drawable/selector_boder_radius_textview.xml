@@ -1,0 +1,14 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape>
+            <corners android:radius="50dp" />
+            <solid android:color="#80F1F0F0" /> <!-- Màu nền khi nhấn, ví dụ: 50% opacity -->
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <corners android:radius="50dp" />
+            <solid android:color="#B3F1F0F0" /> <!-- Màu nền mặc định -->
+        </shape>
+    </item>
+</selector>

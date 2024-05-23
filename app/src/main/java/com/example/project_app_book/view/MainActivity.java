@@ -28,6 +28,16 @@ public class MainActivity extends AppCompatActivity {
 //        setSupportActionBar(actionBar);
         addEvents();
     }
+
+    @Override
+    public void onBackPressed() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStack(); // Pop the back stack to go to the previous fragment
+        } else {
+            super.onBackPressed(); // Otherwise, perform the default back action
+        }
+    }
     void addControls()
     {
         bottomNavigationView=(BottomNavigationView)
