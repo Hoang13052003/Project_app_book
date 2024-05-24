@@ -112,7 +112,7 @@
         </LinearLayout>
     </ScrollView>
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_fragment_detail"
+        android:id="@+id/toolbar_fragment_read_book"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:minHeight="?attr/actionBarSize"

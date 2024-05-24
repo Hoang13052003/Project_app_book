@@ -65,6 +65,7 @@
 
                 </LinearLayout>
                 <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgSetting"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:scaleType="center"
@@ -130,7 +131,7 @@
         </LinearLayout>
     </ScrollView>
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_fragment_detail"
+        android:id="@+id/toolbar_fragment_user"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:minHeight="?attr/actionBarSize"

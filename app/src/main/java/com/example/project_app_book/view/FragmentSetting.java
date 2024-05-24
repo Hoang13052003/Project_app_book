@@ -7,26 +7,20 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.project_app_book.R;
 
+public class FragmentSetting extends Fragment {
 
-public class FragmentReadBook extends Fragment {
 
-
-    public FragmentReadBook() {
+    public FragmentSetting() {
         // Required empty public constructor
     }
-    private static final String ARG_BOOK_ID = "book_id";
-    private String bookId;
-    private boolean isHeartSelected = false;
-    private TextView tvReadBook;
 
-    public static FragmentReadBook newInstance(String bookId) {
-        FragmentReadBook fragment = new FragmentReadBook();
+
+    public static FragmentSetting newInstance() {
+        FragmentSetting fragment = new FragmentSetting();
         Bundle args = new Bundle();
-        args.putString(ARG_BOOK_ID, bookId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -35,17 +29,17 @@ public class FragmentReadBook extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            bookId = getArguments().getString(ARG_BOOK_ID);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_setting, container, false);
 
-        View view = inflater.inflate(R.layout.fragment_read_book, container, false);
 
-        androidx.appcompat.widget.Toolbar toolbar = view.findViewById(R.id.toolbar_fragment_read_book);
+        androidx.appcompat.widget.Toolbar toolbar = view.findViewById(R.id.toolbar_fragment_setting);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_states);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +48,6 @@ public class FragmentReadBook extends Fragment {
                 getParentFragmentManager().popBackStack();
             }
         });
-
         return view;
     }
 }
