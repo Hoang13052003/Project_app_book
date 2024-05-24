@@ -4,7 +4,14 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">16dp</item> <!-- Bo tròn với bán kính 16dp -->
     </style>
-    <style name="CustomTextViewStyle">
-        <item name="android:fontFamily"></item>
+
+<!--    <style name="CustomTextViewStyle">-->
+<!--        <item name="android:fontFamily"></item>-->
+<!--    </style>-->
+<!--    -->
+    <style name="ToolbarTitleText">
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
     </style>
 </resources>

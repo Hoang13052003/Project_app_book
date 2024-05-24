@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
                 if (item.getItemId() == R.id.btnUser) {
-                    loadFragment(new FragmentHome());
+                    loadFragment(new FragmentUser());
                     return true;
                 }
                 return false;

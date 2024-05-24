@@ -8,7 +8,7 @@
     <item>
         <shape>
             <corners android:radius="50dp" />
-            <solid android:color="#B3F1F0F0" /> <!-- Màu nền mặc định -->
+            <solid android:color="#4DF1F0F0" /> <!-- Màu nền mặc định -->
         </shape>
     </item>
 </selector>

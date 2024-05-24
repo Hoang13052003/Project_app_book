@@ -4,11 +4,13 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.project_app_book.R;
 
@@ -20,6 +22,7 @@ public class FragmentDetailBook extends Fragment {
     private static final String ARG_BOOK_ID = "book_id";
     private String bookId;
     private boolean isHeartSelected = false;
+    private TextView tvReadBook;
     public static FragmentDetailBook newInstance(String bookId) {
         FragmentDetailBook fragment = new FragmentDetailBook();
         Bundle args = new Bundle();
@@ -48,18 +51,12 @@ public class FragmentDetailBook extends Fragment {
         @SuppressLint("DiscouragedApi") int resourceId = container.getResources().getIdentifier(bookId, "drawable", getContext().getPackageName());
         imageView.setImageResource(resourceId);
 
-//        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
-//            @Override
-//            public void handleOnBackPressed() {
-//                // Custom back action if needed
-//                getParentFragmentManager().popBackStack(); // Pop the back stack to go to the previous fragment
-//            }
-//        });
 
 
 
 
         final ImageView ivHeart = view.findViewById(R.id.imgYeuThich);
+        tvReadBook = view.findViewById(R.id.tvReadBook);
         ivHeart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,6 +66,18 @@ public class FragmentDetailBook extends Fragment {
                 } else {
                     ivHeart.setImageResource(R.drawable.ic_heart);
                 }
+            }
+        });
+
+        tvReadBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentReadBook fragmentReadBook = FragmentReadBook.newInstance(bookId);
+                // Thực hiện việc chuyển đổi fragment
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragLayoutLoad, fragmentReadBook);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
 

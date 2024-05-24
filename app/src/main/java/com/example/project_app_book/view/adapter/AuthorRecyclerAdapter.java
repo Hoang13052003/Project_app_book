@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_app_book.R;
 import com.example.project_app_book.model.Author;
+import com.example.project_app_book.model.Book;
 
 import java.util.ArrayList;
 
@@ -20,19 +21,38 @@ public class AuthorRecyclerAdapter extends RecyclerView.Adapter<AuthorRecyclerAd
     private ArrayList<Author> authorList;
     private Context context;
     private int layoutResource;
-
+    private OnItemClickListener listener;
     public AuthorRecyclerAdapter(Context context, ArrayList<Author> authorList, int layoutResource) {
         this.context = context;
         this.authorList = authorList;
         this.layoutResource = layoutResource;
     }
+    // 2. Interface để xử lý sự kiện nhấn vào mục
+    public interface OnItemClickListener {
+        void onItemClick(Author author);
+    }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    // 3. Phương thức để thiết lập listener
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView imgAvatarAuthor;
 
         public ViewHolder(View itemView) {
             super(itemView);
             imgAvatarAuthor = itemView.findViewById(R.id.imgAvatarAuthor);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(authorList.get(position));
+                        }
+                    }
+                }
+            });
         }
     }
 

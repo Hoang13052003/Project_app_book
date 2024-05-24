@@ -101,19 +101,43 @@ public class FragmentHome extends Fragment {
                     }
 
                     // Cập nhật adapter sau khi dữ liệu thay đổi
-                    BookRecyclerAdapter bookRecyclerAdapter = new BookRecyclerAdapter(getActivity(), listBook, R.layout.layout_item_colum_book);
                     BookRecyclerAdapter bookRecyclerAdapterTopBook = new BookRecyclerAdapter(getActivity(), listBook, R.layout.layout_item_colum_book_popular);
                     BookRecyclerAdapter bookRecyclerAdapterNewBook = new BookRecyclerAdapter(getActivity(), listBook, R.layout.layout_item_colum_book_3_row);
+                    BookRecyclerAdapter bookRecyclerAdapter = new BookRecyclerAdapter(getActivity(), listBook, R.layout.layout_item_colum_book);
+                    AuthorRecyclerAdapter authorRecyclerAdapter = new AuthorRecyclerAdapter(getActivity(), listAuthor, R.layout.layout_item_author);
+
                     recycler_view_top_book.setAdapter(bookRecyclerAdapterTopBook);
                     recycler_view_Moi_XB.setAdapter(bookRecyclerAdapterNewBook);
                     recycler_view_kham_pha_english_book.setAdapter(bookRecyclerAdapter);
-
-                    AuthorRecyclerAdapter authorRecyclerAdapter = new AuthorRecyclerAdapter(getActivity(), listAuthor, R.layout.layout_item_author);
                     recycler_view_author.setAdapter(authorRecyclerAdapter);
                     bookRecyclerAdapterTopBook.setOnItemClickListener(new BookRecyclerAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(Book book) {
-//                            FragmentDetailBook fragmentDetailBook = FragmentDetailBook.newInstance(String.valueOf(book.getAuthorId()));
+                            FragmentDetailBook fragmentDetailBook = FragmentDetailBook.newInstance(book.getImage());
+
+                            // Thực hiện việc chuyển đổi fragment
+                            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                            transaction.replace(R.id.fragLayoutLoad, fragmentDetailBook); // fragment_container là id của FrameLayout trong activity_main.xml
+                            transaction.addToBackStack(null); // thêm transaction vào back stack để có thể quay lại fragment trước đó
+                            transaction.commit();
+                        }
+                    });
+                    bookRecyclerAdapter.setOnItemClickListener(new BookRecyclerAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Book book) {
+                            FragmentDetailBook fragmentDetailBook = FragmentDetailBook.newInstance(book.getImage());
+
+                            // Thực hiện việc chuyển đổi fragment
+                            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                            transaction.replace(R.id.fragLayoutLoad, fragmentDetailBook); // fragment_container là id của FrameLayout trong activity_main.xml
+                            transaction.addToBackStack(null); // thêm transaction vào back stack để có thể quay lại fragment trước đó
+                            transaction.commit();
+                        }
+                    });
+
+                    bookRecyclerAdapterNewBook.setOnItemClickListener(new BookRecyclerAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Book book) {
                             FragmentDetailBook fragmentDetailBook = FragmentDetailBook.newInstance(book.getImage());
 
                             // Thực hiện việc chuyển đổi fragment
