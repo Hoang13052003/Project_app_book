@@ -13,6 +13,11 @@ public class AnimationUtil {
     public interface AnimationListener {
         void onAnimationEnd();
     }
+    public static void applyScaleAnimation_fade(Context context, View view) {
+        Animation fadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in);
+
+        view.startAnimation(fadeIn);
+    }
     public static void applyScaleAnimation(Context context, View view) {
         Animation scaleDown = AnimationUtils.loadAnimation(context, R.anim.scale_down);
         Animation scaleUp = AnimationUtils.loadAnimation(context, R.anim.scale_up);
