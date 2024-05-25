@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.project_app_book.R;
+import com.example.project_app_book.model.AnimationUtil;
 
 public class StartActivity extends AppCompatActivity {
     private Button btnBatDau, btnLogin;
@@ -30,6 +31,7 @@ public class StartActivity extends AppCompatActivity {
         btnBatDau.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AnimationUtil.applyScaleAnimation(getApplicationContext(), btnBatDau);
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }
@@ -37,6 +39,7 @@ public class StartActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AnimationUtil.applyScaleAnimation(getApplicationContext(), btnLogin);
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
             }

@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_app_book.R;
+import com.example.project_app_book.model.AnimationUtil;
 import com.example.project_app_book.model.Author;
 import com.example.project_app_book.model.Book;
 
@@ -48,7 +49,12 @@ public class AuthorRecyclerAdapter extends RecyclerView.Adapter<AuthorRecyclerAd
                     if (listener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(authorList.get(position));
+                            AnimationUtil.applyScaleAnimation(context, v, new Runnable() {
+                                @Override
+                                public void run() {
+                                    listener.onItemClick(authorList.get(position));
+                                }
+                            });
                         }
                     }
                 }

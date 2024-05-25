@@ -13,31 +13,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.project_app_book.R;
+import com.example.project_app_book.model.AnimationUtil;
+import com.example.project_app_book.model.Book;
 
 public class FragmentDetailBook extends Fragment {
 
+
+
+    private Book book;
+    private boolean isHeartSelected = false;
+    private ImageView imgAvatarBook, ivHeart ;
+    private TextView tvNameBook, tvReadBook;
     public FragmentDetailBook() {
         // Required empty public constructor
     }
-    private static final String ARG_BOOK_ID = "book_id";
-    private String bookId;
-    private boolean isHeartSelected = false;
-    private TextView tvReadBook;
-    public static FragmentDetailBook newInstance(String bookId) {
-        FragmentDetailBook fragment = new FragmentDetailBook();
-        Bundle args = new Bundle();
-        args.putString(ARG_BOOK_ID, bookId);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            bookId = getArguments().getString(ARG_BOOK_ID);
-        }
-
+    public FragmentDetailBook(Book item) {
+        this.book = item;
     }
 
     @Override
@@ -48,15 +39,35 @@ public class FragmentDetailBook extends Fragment {
 //        @SuppressLint({"LocalSuppress", "MissingInflatedId"}) TextView tvdemo = view.findViewById(R.id.tvdemo);
         ImageView imageView = view.findViewById(R.id.imgAvatarBook);
 
-        @SuppressLint("DiscouragedApi") int resourceId = container.getResources().getIdentifier(bookId, "drawable", getContext().getPackageName());
+        @SuppressLint("DiscouragedApi") int resourceId = container.getResources().getIdentifier(book.getImage(), "drawable", getContext().getPackageName());
         imageView.setImageResource(resourceId);
 
 
 
 
 
-        final ImageView ivHeart = view.findViewById(R.id.imgYeuThich);
+
+
+
+
+
+        addControls(view);
+        addEvents(container, view);
+        return view;
+    }
+    private void addControls(View view){
+        ivHeart = view.findViewById(R.id.imgYeuThich);
         tvReadBook = view.findViewById(R.id.tvReadBook);
+
+        imgAvatarBook = view.findViewById(R.id.imgAvatarBook);
+        tvNameBook = view.findViewById(R.id.tvNameBook);
+
+    }
+    private void addEvents(ViewGroup container,View view){
+        @SuppressLint("DiscouragedApi") int resourceId = container.getResources().getIdentifier(book.getImage(), "drawable", getContext().getPackageName());
+        imgAvatarBook.setImageResource(resourceId);
+        tvNameBook.setText(book.getTitle());
+
         ivHeart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,17 +83,27 @@ public class FragmentDetailBook extends Fragment {
         tvReadBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentReadBook fragmentReadBook = FragmentReadBook.newInstance(bookId);
-                // Thực hiện việc chuyển đổi fragment
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragLayoutLoad, fragmentReadBook);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                AnimationUtil.applyScaleAnimation(getContext(), tvReadBook, new AnimationUtil.AnimationListener() {
+                    @Override
+                    public void onAnimationEnd() {
+                        // Sau khi hoàn thành animation, chuyển đổi fragment
+                        FragmentReadBook fragmentReadBook = new FragmentReadBook(book, 1);
+                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.fragLayoutLoad, fragmentReadBook);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    }
+                });
             }
         });
 
         androidx.appcompat.widget.Toolbar toolbar = view.findViewById(R.id.toolbar_fragment_detail);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_states);
+        if(book.getTitle().length()>15){
+            toolbar.setTitle(book.getTitle().substring(0, 15)+"...");
+        }else {
+            toolbar.setTitle(book.getTitle());
+        }
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,9 +111,6 @@ public class FragmentDetailBook extends Fragment {
                 getParentFragmentManager().popBackStack();
             }
         });
-
-
-
-        return view;
     }
+
 }

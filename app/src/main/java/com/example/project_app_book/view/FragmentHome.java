@@ -17,9 +17,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import com.example.project_app_book.model.AnimationUtil;
 import com.example.project_app_book.model.Author;
 import com.example.project_app_book.view.adapter.AuthorRecyclerAdapter;
 import com.example.project_app_book.view.adapter.BookRecyclerAdapter;
+import com.example.project_app_book.view.adapter.BookThreeRowRecyclerAdapter;
 import com.example.project_app_book.view.adapter.CategoryBookAdapter;
 import com.example.project_app_book.R;
 import com.example.project_app_book.model.Book;
@@ -102,7 +104,7 @@ public class FragmentHome extends Fragment {
 
                     // Cập nhật adapter sau khi dữ liệu thay đổi
                     BookRecyclerAdapter bookRecyclerAdapterTopBook = new BookRecyclerAdapter(getActivity(), listBook, R.layout.layout_item_colum_book_popular);
-                    BookRecyclerAdapter bookRecyclerAdapterNewBook = new BookRecyclerAdapter(getActivity(), listBook, R.layout.layout_item_colum_book_3_row);
+                    BookThreeRowRecyclerAdapter bookRecyclerAdapterNewBook = new BookThreeRowRecyclerAdapter(getActivity(), listBook, R.layout.layout_item_colum_book_3_row);
                     BookRecyclerAdapter bookRecyclerAdapter = new BookRecyclerAdapter(getActivity(), listBook, R.layout.layout_item_colum_book);
                     AuthorRecyclerAdapter authorRecyclerAdapter = new AuthorRecyclerAdapter(getActivity(), listAuthor, R.layout.layout_item_author);
 
@@ -113,38 +115,31 @@ public class FragmentHome extends Fragment {
                     bookRecyclerAdapterTopBook.setOnItemClickListener(new BookRecyclerAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(Book book) {
-                            FragmentDetailBook fragmentDetailBook = FragmentDetailBook.newInstance(book.getImage());
-
-                            // Thực hiện việc chuyển đổi fragment
-                            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                            transaction.replace(R.id.fragLayoutLoad, fragmentDetailBook); // fragment_container là id của FrameLayout trong activity_main.xml
-                            transaction.addToBackStack(null); // thêm transaction vào back stack để có thể quay lại fragment trước đó
-                            transaction.commit();
+                            loadFragment(new FragmentDetailBook(book));
                         }
                     });
+
+                    bookRecyclerAdapterNewBook.setOnItemClickListener(new BookThreeRowRecyclerAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(Book book) {
+                            loadFragment(new FragmentDetailBook(book));
+                        }
+                    });
+
                     bookRecyclerAdapter.setOnItemClickListener(new BookRecyclerAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(Book book) {
-                            FragmentDetailBook fragmentDetailBook = FragmentDetailBook.newInstance(book.getImage());
-
-                            // Thực hiện việc chuyển đổi fragment
-                            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                            transaction.replace(R.id.fragLayoutLoad, fragmentDetailBook); // fragment_container là id của FrameLayout trong activity_main.xml
-                            transaction.addToBackStack(null); // thêm transaction vào back stack để có thể quay lại fragment trước đó
-                            transaction.commit();
+                            loadFragment(new FragmentDetailBook(book));
                         }
                     });
 
-                    bookRecyclerAdapterNewBook.setOnItemClickListener(new BookRecyclerAdapter.OnItemClickListener() {
+                    authorRecyclerAdapter.setOnItemClickListener(new AuthorRecyclerAdapter.OnItemClickListener() {
                         @Override
-                        public void onItemClick(Book book) {
-                            FragmentDetailBook fragmentDetailBook = FragmentDetailBook.newInstance(book.getImage());
+                        public void onItemClick(Author author) {
 
-                            // Thực hiện việc chuyển đổi fragment
-                            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                            transaction.replace(R.id.fragLayoutLoad, fragmentDetailBook); // fragment_container là id của FrameLayout trong activity_main.xml
-                            transaction.addToBackStack(null); // thêm transaction vào back stack để có thể quay lại fragment trước đó
-                            transaction.commit();
+
+
+
                         }
                     });
                 } else {
@@ -171,5 +166,13 @@ public class FragmentHome extends Fragment {
         CategoryBookAdapter categoryBookAdapter = new CategoryBookAdapter(getActivity(), R.layout.layout_row_category_book, listCategoryBook);
         lvCategoryBook.setAdapter(categoryBookAdapter);
 
+    }
+
+    private void loadFragment(Fragment fragment){
+        // Thực hiện việc chuyển đổi fragment
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragLayoutLoad, fragment); // fragment_container là id của FrameLayout trong activity_main.xml
+        transaction.addToBackStack(null); // thêm transaction vào back stack để có thể quay lại fragment trước đó
+        transaction.commit();
     }
 }

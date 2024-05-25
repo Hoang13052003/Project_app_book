@@ -13,34 +13,30 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_app_book.R;
 import com.example.project_app_book.model.AnimationUtil;
-import com.example.project_app_book.model.Author;
 import com.example.project_app_book.model.Book;
 
 import java.util.ArrayList;
 
-public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapter.ViewHolder> {
+public class BookThreeRowRecyclerAdapter extends RecyclerView.Adapter<BookThreeRowRecyclerAdapter.ViewHolder> {
 
     private ArrayList<Book> bookList;
-//    private ArrayList<Author> authorArrayList;
-
     private Context context;
     private int layoutResource;
-
     private OnItemClickListener listener;
 
     // Constructor
-    public BookRecyclerAdapter(Context context, ArrayList<Book> bookList, int layoutResource) {
+    public BookThreeRowRecyclerAdapter(Context context, ArrayList<Book> bookList, int layoutResource) {
         this.context = context;
         this.bookList = bookList;
         this.layoutResource = layoutResource;
     }
 
-    // 2. Interface để xử lý sự kiện nhấn vào mục
+    // Interface to handle item click events
     public interface OnItemClickListener {
         void onItemClick(Book book);
     }
 
-    // 3. Phương thức để thiết lập listener
+    // Method to set the listener
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
@@ -48,23 +44,26 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
     // ViewHolder class
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView imgAvatarBook;
-//        public TextView tvNameBook, tvNameAuthor;
+        public TextView tvNameBook, tvNameAuthor;
 
         public ViewHolder(View itemView) {
             super(itemView);
             imgAvatarBook = itemView.findViewById(R.id.imgAvatarBook);
-//            tvNameBook = itemView.findViewById(R.id.tvNameBook);
-//            tvNameAuthor = itemView.findViewById(R.id.tvNameAuthor);
-            // 4. Thiết lập sự kiện nhấn vào mục
+            tvNameBook = itemView.findViewById(R.id.tvNameBook);
+            tvNameAuthor = itemView.findViewById(R.id.tvNameAuthor);
+
+            // Set item click listener
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (listener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            AnimationUtil.applyScaleAnimation(context, v, new Runnable() {
+                            // Apply scale animation
+                            AnimationUtil.applyScaleAnimation(context, v, new AnimationUtil.AnimationListener() {
                                 @Override
-                                public void run() {
+                                public void onAnimationEnd() {
+                                    // Handle item click
                                     listener.onItemClick(bookList.get(position));
                                 }
                             });
@@ -87,17 +86,19 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Book book = bookList.get(position);
 
-        @SuppressLint("DiscouragedApi") int resourceId = context.getResources().getIdentifier(book.getImage(), "drawable", context.getPackageName());
+        // Set image resource
+        int resourceId = context.getResources().getIdentifier(book.getImage(), "drawable", context.getPackageName());
         holder.imgAvatarBook.setImageResource(resourceId);
-//        holder.tvNameBook.setText(book.getTitle());
-//        holder.tvNameAuthor.setText(book.getAuthorId());
+
+        // Set book title
+        holder.tvNameBook.setText(book.getTitle());
+
+        // Set author name (assuming getAuthorId() returns author name)
+        holder.tvNameAuthor.setText(String.valueOf(book.getAuthorId()));
     }
 
     @Override
     public int getItemCount() {
         return bookList.size();
     }
-
-
-
 }
