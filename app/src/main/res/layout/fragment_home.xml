@@ -67,12 +67,15 @@
                     android:outAnimation="@android:anim/slide_out_right">
 
                     <LinearLayout
+                        android:id="@+id/linearLayout_item_home_1"
                         android:layout_width="match_parent"
                         android:layout_height="207dp"
                         android:background="@drawable/boder_radius_gradian"
                         android:orientation="horizontal"
                         android:layout_margin="10dp"
-                        android:padding="15dp">
+                        android:padding="15dp"
+                        android:clickable="true"
+                        android:focusable="true">
 
                         <ImageView
                             android:id="@+id/imgBook"
@@ -118,12 +121,15 @@
 
                     </LinearLayout>
                     <LinearLayout
+                        android:id="@+id/linearLayout_item_home_2"
                         android:layout_width="match_parent"
                         android:layout_height="207dp"
                         android:background="@drawable/boder_radius_gradian"
                         android:orientation="horizontal"
                         android:layout_margin="10dp"
-                        android:padding="15dp">
+                        android:padding="15dp"
+                        android:clickable="true"
+                        android:focusable="true">
 
                         <ImageView
                             android:id="@+id/imgBook1"

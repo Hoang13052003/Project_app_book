@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -38,8 +39,8 @@ public class FragmentHome extends Fragment {
     private ArrayList<CategoryBook> listCategoryBook = new ArrayList<>();
     private ArrayList<Author> listAuthor = new ArrayList<>();
     private RecyclerView recycler_view_top_book, recycler_view_Moi_XB, recycler_view_author, recycler_view_kham_pha_english_book;
-
     private ListView lvCategoryBook;
+    private LinearLayout linearLayout_item_home_1, linearLayout_item_home_2;
 
     public FragmentHome() {
         // Required empty public constructor
@@ -67,11 +68,8 @@ public class FragmentHome extends Fragment {
 
         lvCategoryBook = view.findViewById(R.id.lvCategoryBook);
 
-//        // Thiết lập LayoutManager cho RecyclerViews
-//        recycler_view_top_book.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-//        recycler_view_Moi_XB.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-//        recycler_view_author.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-//        recycler_view_kham_pha_english_book.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        linearLayout_item_home_1 = view.findViewById(R.id.linearLayout_item_home_1);
+        linearLayout_item_home_2 = view.findViewById(R.id.linearLayout_item_home_2);
     }
 
     private void addEvents(){
@@ -151,7 +149,18 @@ public class FragmentHome extends Fragment {
 
 
 
-
+        linearLayout_item_home_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AnimationUtil.applyScaleAnimation(getContext(), linearLayout_item_home_1);
+            }
+        });
+        linearLayout_item_home_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AnimationUtil.applyScaleAnimation(getContext(), linearLayout_item_home_2);
+            }
+        });
 
         // dach sách danh mục
         listCategoryBook = new ArrayList<>();
