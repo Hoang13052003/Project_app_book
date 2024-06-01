@@ -3,6 +3,7 @@ package com.example.project_app_book.model;
 import java.util.Map;
 
 public class Book {
+    private String bookID;
     private String authorId;
     private String categoryId;
     private Map<String, String> content;
@@ -12,11 +13,10 @@ public class Book {
     private String publisherId;
     private String title;
 
-    // Constructor không tham số
     public Book() {}
 
-    // Constructor có tham số
-    public Book(String authorId, String categoryId, Map<String, String> content, String description, String image, int publishedYear, String publisherId, String title) {
+    public Book(String bookID, String authorId, String categoryId, Map<String, String> content, String description, String image, int publishedYear, String publisherId, String title) {
+        this.bookID = bookID;
         this.authorId = authorId;
         this.categoryId = categoryId;
         this.content = content;
@@ -28,6 +28,14 @@ public class Book {
     }
 
     // Getter và Setter
+    public String getBookID() {
+        return bookID;
+    }
+
+    public void setBookID(String bookID) {
+        this.bookID = bookID;
+    }
+
     public String getAuthorId() {
         return authorId;
     }

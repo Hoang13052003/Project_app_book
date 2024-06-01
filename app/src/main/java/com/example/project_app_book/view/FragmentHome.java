@@ -89,6 +89,7 @@ public class FragmentHome extends Fragment {
                     listBook.clear();
                     for (DataSnapshot snapshot : booksSnapshot.getChildren()) {
                         Book book = snapshot.getValue(Book.class);
+                        book.setBookID(snapshot.getKey());
                         listBook.add(book);
                     }
 

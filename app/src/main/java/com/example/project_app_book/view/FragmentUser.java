@@ -68,12 +68,18 @@ public class FragmentUser extends Fragment {
             @Override
             public void onClick(View v) {
                 AnimationUtil.applyScaleAnimation(getContext(), tvThongTinCaNhan);
+
             }
         });
         linearLayout_QR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AnimationUtil.applyScaleAnimation(getContext(), linearLayout_QR);
+                FragmentDanhSachYeuThich frgYeuThich = new FragmentDanhSachYeuThich();
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragLayoutLoad, frgYeuThich);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
         linearLayout_ThongTinVeChungToi.setOnClickListener(new View.OnClickListener() {
