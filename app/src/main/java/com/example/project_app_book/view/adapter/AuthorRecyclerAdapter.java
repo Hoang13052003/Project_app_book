@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.project_app_book.R;
 import com.example.project_app_book.model.AnimationUtil;
 import com.example.project_app_book.model.Author;
-import com.example.project_app_book.model.Book;
 
 import java.util.ArrayList;
 

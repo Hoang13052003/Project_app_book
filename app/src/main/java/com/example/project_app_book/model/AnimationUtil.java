@@ -85,14 +85,14 @@ public class AnimationUtil {
         view.startAnimation(scaleDown);
 
         // Set up animation listener to handle animation end
-        scaleDown.setAnimationListener(new android.view.animation.Animation.AnimationListener() {
+        scaleDown.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(android.view.animation.Animation animation) {
+            public void onAnimationStart(Animation animation) {
                 // Not needed in this case
             }
 
             @Override
-            public void onAnimationEnd(android.view.animation.Animation animation) {
+            public void onAnimationEnd(Animation animation) {
                 // Call onAnimationEnd() of the custom AnimationListener
                 if (listener != null) {
                     listener.onAnimationEnd();
@@ -100,7 +100,7 @@ public class AnimationUtil {
             }
 
             @Override
-            public void onAnimationRepeat(android.view.animation.Animation animation) {
+            public void onAnimationRepeat(Animation animation) {
                 // Not needed in this case
             }
         });

@@ -19,13 +19,13 @@ import java.util.ArrayList;
 public class CategoryBookAdapter extends ArrayAdapter<CategoryBook> {
     private Context context;
     private ArrayList<CategoryBook> arrayList;
-    private int layout;
+    private int layoutResource;
 
-    public CategoryBookAdapter(@NonNull Context context, int resource, @NonNull ArrayList<CategoryBook> objects) {
-        super(context, resource, objects);
+    public CategoryBookAdapter(@NonNull Context context,@NonNull ArrayList<CategoryBook> objects, int layoutResource) {
+        super(context, layoutResource, objects);
         this.context = context;
         this.arrayList = objects;
-        this.layout = resource;
+        this.layoutResource = layoutResource;
     }
 
     @NonNull
@@ -33,11 +33,11 @@ public class CategoryBookAdapter extends ArrayAdapter<CategoryBook> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         CategoryBook categoryBook = arrayList.get(position);
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(layout, parent, false);
+            convertView = LayoutInflater.from(context).inflate(layoutResource, parent, false);
         }
         ImageView img = convertView.findViewById(R.id.imgCategoryBook);
-        int resourceId = context.getResources().getIdentifier(categoryBook.getImg(), "drawable", context.getPackageName());
-        img.setImageResource(resourceId);
+//        int resourceId = context.getResources().getIdentifier(categoryBook.getImg(), "drawable", context.getPackageName());
+//        img.setImageResource(resourceId);
 
         TextView txtName = convertView.findViewById(R.id.tvNameCategoryBook);
         txtName.setText(categoryBook.getName());

@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_app_book.R;
 import com.example.project_app_book.model.AnimationUtil;
-import com.example.project_app_book.model.Author;
 import com.example.project_app_book.model.Book;
 
 import java.util.ArrayList;
@@ -25,7 +24,6 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
 
     private Context context;
     private int layoutResource;
-
     private OnItemClickListener listener;
 
     // Constructor
@@ -48,7 +46,7 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
     // ViewHolder class
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView imgAvatarBook;
-//        public TextView tvNameBook, tvNameAuthor;
+        public TextView tvNameBook, tvNameAuthor;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -91,6 +89,7 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
         holder.imgAvatarBook.setImageResource(resourceId);
 //        holder.tvNameBook.setText(book.getTitle());
 //        holder.tvNameAuthor.setText(book.getAuthorId());
+
     }
 
     @Override

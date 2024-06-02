@@ -2,37 +2,38 @@ package com.example.project_app_book.view;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.project_app_book.R;
 import com.example.project_app_book.model.AnimationUtil;
 import com.example.project_app_book.model.Author;
+import com.example.project_app_book.model.Book;
+import com.example.project_app_book.model.CategoryBook;
 import com.example.project_app_book.view.adapter.AuthorRecyclerAdapter;
 import com.example.project_app_book.view.adapter.BookRecyclerAdapter;
 import com.example.project_app_book.view.adapter.BookThreeRowRecyclerAdapter;
 import com.example.project_app_book.view.adapter.CategoryBookAdapter;
-import com.example.project_app_book.R;
-import com.example.project_app_book.model.Book;
-import com.example.project_app_book.model.CategoryBook;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 public class FragmentHome extends Fragment {
 //    private ImageView imageViewAnh;
     private ArrayList<Book> listBook = new ArrayList<>();
@@ -41,7 +42,7 @@ public class FragmentHome extends Fragment {
     private RecyclerView recycler_view_top_book, recycler_view_Moi_XB, recycler_view_author, recycler_view_kham_pha_english_book;
     private ListView lvCategoryBook;
     private LinearLayout linearLayout_item_home_1, linearLayout_item_home_2;
-
+    HashMap<String, String> authorMap;
     public FragmentHome() {
         // Required empty public constructor
     }
@@ -72,15 +73,16 @@ public class FragmentHome extends Fragment {
         linearLayout_item_home_2 = view.findViewById(R.id.linearLayout_item_home_2);
     }
 
-    private void addEvents(){
+    private void addEvents()
+    {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
         // Tạo các task lấy dữ liệu từ Firebase
         Task<DataSnapshot> booksTask = databaseReference.child("books").get();
         Task<DataSnapshot> authorsTask = databaseReference.child("authors").get();
-
+        Task<DataSnapshot> categoriesTask = databaseReference.child("categories").get();
         // Kết hợp các task
-        Tasks.whenAll(booksTask, authorsTask).addOnCompleteListener(new OnCompleteListener<Void>() {
+        Tasks.whenAll(booksTask, authorsTask,categoriesTask).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
@@ -88,6 +90,8 @@ public class FragmentHome extends Fragment {
                     DataSnapshot booksSnapshot = booksTask.getResult();
                     listBook.clear();
                     for (DataSnapshot snapshot : booksSnapshot.getChildren()) {
+
+//                        Book book = new Book();
                         Book book = snapshot.getValue(Book.class);
                         book.setBookID(snapshot.getKey());
                         listBook.add(book);
@@ -96,17 +100,43 @@ public class FragmentHome extends Fragment {
                     // Lấy dữ liệu tác giả
                     DataSnapshot authorsSnapshot = authorsTask.getResult();
                     listAuthor.clear();
-                    for (DataSnapshot snapshot : authorsSnapshot.getChildren()) {
+                    authorMap = new HashMap<>();
+                    for (DataSnapshot snapshot : authorsSnapshot.getChildren())
+                    {
                         Author author = snapshot.getValue(Author.class);
+                        author.setAuthorID(snapshot.getKey());
                         listAuthor.add(author);
+                        authorMap.put(author.getAuthorID(), author.getName());
+                    }
+                    SharedViewModel sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+                    sharedViewModel.setAuthorMap(authorMap);
+
+                    //Lấy dữ liệu thể loại
+                    DataSnapshot categoriesSnapshot = categoriesTask.getResult();
+                    listCategoryBook.clear();
+                    for (DataSnapshot snapshot : categoriesSnapshot.getChildren())
+                    {
+                        String categoryName = snapshot.getValue(String.class);
+                        String categoryKey = snapshot.getKey();
+                        if (categoryName != null) {
+                            CategoryBook categoryBook = new CategoryBook(categoryName, categoryKey);
+                            listCategoryBook.add(categoryBook);
+                        } else {
+                            // Handle the case where categoryName is null
+                            Toast.makeText(getActivity(), "Lỗi", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     // Cập nhật adapter sau khi dữ liệu thay đổi
+
                     BookRecyclerAdapter bookRecyclerAdapterTopBook = new BookRecyclerAdapter(getActivity(), listBook, R.layout.layout_item_colum_book_popular);
-                    BookThreeRowRecyclerAdapter bookRecyclerAdapterNewBook = new BookThreeRowRecyclerAdapter(getActivity(), listBook, R.layout.layout_item_colum_book_3_row);
+//                    BookThreeRowRecyclerAdapter bookRecyclerAdapterNewBook = new BookThreeRowRecyclerAdapter(getActivity(), listBook, R.layout.layout_item_colum_book_3_row);
+                    BookThreeRowRecyclerAdapter bookRecyclerAdapterNewBook = new BookThreeRowRecyclerAdapter(getActivity(), listBook, R.layout.layout_item_colum_book_3_row, authorMap);
                     BookRecyclerAdapter bookRecyclerAdapter = new BookRecyclerAdapter(getActivity(), listBook, R.layout.layout_item_colum_book);
                     AuthorRecyclerAdapter authorRecyclerAdapter = new AuthorRecyclerAdapter(getActivity(), listAuthor, R.layout.layout_item_author);
+                    CategoryBookAdapter categoryBookAdapter = new CategoryBookAdapter(getActivity(), listCategoryBook, R.layout.layout_row_category_book);
 
+                    lvCategoryBook.setAdapter(categoryBookAdapter);
                     recycler_view_top_book.setAdapter(bookRecyclerAdapterTopBook);
                     recycler_view_Moi_XB.setAdapter(bookRecyclerAdapterNewBook);
                     recycler_view_kham_pha_english_book.setAdapter(bookRecyclerAdapter);
@@ -141,6 +171,24 @@ public class FragmentHome extends Fragment {
 
                         }
                     });
+                    lvCategoryBook.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                            String selectedCategoryKey = listCategoryBook.get(position).getCategoryId();
+
+                            // Tạo một thể hiện mới của FragmentDanhSachTheLoai
+                            FragmentDanhSachTheLoai fragmentDanhSachTheLoai = new FragmentDanhSachTheLoai();
+
+                            // Truyền thể loại đã chọn vào fragment
+                            Bundle bundle = new Bundle();
+                            bundle.putString("category", selectedCategoryKey);
+                            fragmentDanhSachTheLoai.setArguments(bundle);
+
+                            // Hiển thị fragment
+                            loadFragment(fragmentDanhSachTheLoai);
+                        }
+                    });
                 } else {
                     // Xử lý lỗi
                     Toast.makeText(getActivity(), "Failed to load data.", Toast.LENGTH_SHORT).show();
@@ -164,17 +212,17 @@ public class FragmentHome extends Fragment {
         });
 
         // dach sách danh mục
-        listCategoryBook = new ArrayList<>();
-        listCategoryBook.add(new CategoryBook("Kinh doanh", "ic_kinhdoanh"));
-        listCategoryBook.add(new CategoryBook("Văn học", "ic_vanhoc"));
-        listCategoryBook.add(new CategoryBook("Tâm linh - Tôn giáo", "ic_tamlin_tongiao"));
-        listCategoryBook.add(new CategoryBook("Tư duy", "ic_tuduy"));
-        listCategoryBook.add(new CategoryBook("Kỹ năng", "ic_kynang"));
-        listCategoryBook.add(new CategoryBook("Tâm lý hoc", "ic_tamlyhoc"));
-
-
-        CategoryBookAdapter categoryBookAdapter = new CategoryBookAdapter(getActivity(), R.layout.layout_row_category_book, listCategoryBook);
-        lvCategoryBook.setAdapter(categoryBookAdapter);
+//        listCategoryBook = new ArrayList<>();
+//        listCategoryBook.add(new CategoryBook("Kinh doanh", "ic_kinhdoanh"));
+//        listCategoryBook.add(new CategoryBook("Văn học", "ic_vanhoc"));
+//        listCategoryBook.add(new CategoryBook("Tâm linh - Tôn giáo", "ic_tamlin_tongiao"));
+//        listCategoryBook.add(new CategoryBook("Tư duy", "ic_tuduy"));
+//        listCategoryBook.add(new CategoryBook("Kỹ năng", "ic_kynang"));
+//        listCategoryBook.add(new CategoryBook("Tâm lý hoc", "ic_tamlyhoc"));
+//
+//
+//        CategoryBookAdapter categoryBookAdapter = new CategoryBookAdapter(getActivity(), R.layout.layout_row_category_book, listCategoryBook);
+//        lvCategoryBook.setAdapter(categoryBookAdapter);
 
     }
 

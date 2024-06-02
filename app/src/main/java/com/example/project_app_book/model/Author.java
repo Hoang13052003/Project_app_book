@@ -1,6 +1,7 @@
 package com.example.project_app_book.model;
 
 public class Author {
+    private String authorID;
     private String name;
     private String imgAuthor;
 
@@ -29,5 +30,13 @@ public class Author {
 
     public void setImgAuthor(String imgAuthor) {
         this.imgAuthor = imgAuthor;
+    }
+
+    public String getAuthorID() {
+        return authorID;
+    }
+
+    public void setAuthorID(String authorID) {
+        this.authorID = authorID;
     }
 }

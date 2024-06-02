@@ -27,6 +27,8 @@ public class Book {
         this.title = title;
     }
 
+
+
     // Getter và Setter
     public String getBookID() {
         return bookID;
@@ -43,6 +45,7 @@ public class Book {
     public void setAuthorId(String authorId) {
         this.authorId = authorId;
     }
+
 
     public String getCategoryId() {
         return categoryId;

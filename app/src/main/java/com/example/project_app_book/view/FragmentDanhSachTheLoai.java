@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
@@ -19,68 +19,63 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class FragmentDanhSachYeuThich extends Fragment {
+public class FragmentDanhSachTheLoai extends Fragment {
 
-    private RecyclerView recycler_view_favourite;
+    private RecyclerView recycle_view_categories;
     private ArrayList<Book> listBook = new ArrayList<>();
-    BookThreeRowRecyclerAdapter bookRecyclerAdapterNewBook;
     private HashMap<String, String> authorMap;
-    private DatabaseReference userFavoritesRef;
-    private DatabaseReference booksRef;
+    BookThreeRowRecyclerAdapter bookThreeRowRecyclerAdapter;
 
-    public FragmentDanhSachYeuThich() {
+    Toolbar toolbar;
+    public FragmentDanhSachTheLoai() {
         // Required empty public constructor
     }
-
 
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_danh_sach_yeu_thich, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_danh_sach_the_loai, container, false);
         //lấy thông tin tác giá từ database realtime: ID và Tên Tác Giả
         SharedViewModel sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         authorMap = sharedViewModel.getAuthorMap().getValue();
-
         addControls(view);
 
+        String category = getArguments().getString("category");
 
 
-        String userId = "user1";
-        userFavoritesRef = FirebaseDatabase.getInstance().getReference("user").child(userId).child("favourite");
-        booksRef = FirebaseDatabase.getInstance().getReference("books");
 
+        // Lấy danh sách sách theo thể loại đã chọn
+        getBooksByCategory(category);
         addEvents(view);
-
-        loadFavoriteBooks();
-
         return view;
     }
 
-    private void addControls(View view){
-        recycler_view_favourite = view.findViewById(R.id.recycler_view_favourite);
-
-        bookRecyclerAdapterNewBook = new BookThreeRowRecyclerAdapter(getContext(), listBook, R.layout.layout_item_colum_book_favourite, authorMap);
-
-
-        recycler_view_favourite.setAdapter(bookRecyclerAdapterNewBook);
-
+    public void addControls(View view)
+    {
+        recycle_view_categories = view.findViewById(R.id.recycler_view_category);
+//        bookThreeRowRecyclerAdapter = new BookThreeRowRecyclerAdapter(getContext(), listBook, R.layout.layout_item_colum_book_favourite);
+        bookThreeRowRecyclerAdapter = new BookThreeRowRecyclerAdapter(getContext(), listBook, R.layout.layout_item_colum_book_favourite,authorMap);
+        recycle_view_categories.setAdapter(bookThreeRowRecyclerAdapter);
     }
-    private void addEvents(View view){
 
-        bookRecyclerAdapterNewBook.setOnItemClickListener(new BookThreeRowRecyclerAdapter.OnItemClickListener() {
+    public void addEvents(View view)
+    {
+        bookThreeRowRecyclerAdapter.setOnItemClickListener(new BookThreeRowRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Book book) {
-                loadFragment(new FragmentDetailBook(book));
+                loadFragment(new FragmentDetailBook());
             }
         });
 
-        androidx.appcompat.widget.Toolbar toolbar = view.findViewById(R.id.toolbar_fragment_favourite);
+        toolbar = view.findViewById(R.id.toolbar_fragment_category);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_states);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,40 +83,30 @@ public class FragmentDanhSachYeuThich extends Fragment {
                 getParentFragmentManager().popBackStack();
             }
         });
+
     }
 
-    private void loadFavoriteBooks() {
-        userFavoritesRef.addValueEventListener(new ValueEventListener() {
+
+
+
+    public void getBooksByCategory(String category) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("books");
+        Query query = databaseReference.orderByChild("categoryId").equalTo(category);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 listBook.clear();
-                for (DataSnapshot favSnapshot : snapshot.getChildren()) {
-                    String bookId = favSnapshot.getKey();
-                    loadBookDetails(bookId);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Handle database error
-            }
-        });
-    }
-
-    private void loadBookDetails(String bookId) {
-        booksRef.child(bookId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Book book = snapshot.getValue(Book.class);
-                if (book != null) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Book book = snapshot.getValue(Book.class);
                     listBook.add(book);
-                    bookRecyclerAdapterNewBook.notifyDataSetChanged();
                 }
+                // Cập nhật adapter sau khi dữ liệu thay đổi
+                bookThreeRowRecyclerAdapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Handle database error
+            public void onCancelled(DatabaseError databaseError) {
+                // Xử lý lỗi
             }
         });
     }

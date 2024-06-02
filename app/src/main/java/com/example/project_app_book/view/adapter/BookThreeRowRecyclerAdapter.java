@@ -1,6 +1,5 @@
 package com.example.project_app_book.view.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,19 +15,28 @@ import com.example.project_app_book.model.AnimationUtil;
 import com.example.project_app_book.model.Book;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class BookThreeRowRecyclerAdapter extends RecyclerView.Adapter<BookThreeRowRecyclerAdapter.ViewHolder> {
 
     private ArrayList<Book> bookList;
     private Context context;
     private int layoutResource;
+    private HashMap<String, String> authorMap;
     private OnItemClickListener listener;
 
-    // Constructor
-    public BookThreeRowRecyclerAdapter(Context context, ArrayList<Book> bookList, int layoutResource) {
+     //Constructor
+//    public BookThreeRowRecyclerAdapter(Context context, ArrayList<Book> bookList, int layoutResource) {
+//        this.context = context;
+//        this.bookList = bookList;
+//        this.layoutResource = layoutResource;
+//    }
+
+    public BookThreeRowRecyclerAdapter(Context context, ArrayList<Book> bookList, int layoutResource, HashMap<String, String> authorMap) {
         this.context = context;
         this.bookList = bookList;
         this.layoutResource = layoutResource;
+        this.authorMap = authorMap;
     }
 
     // Interface to handle item click events
@@ -93,8 +101,16 @@ public class BookThreeRowRecyclerAdapter extends RecyclerView.Adapter<BookThreeR
         // Set book title
         holder.tvNameBook.setText(book.getTitle());
 
-        // Set author name (assuming getAuthorId() returns author name)
-        holder.tvNameAuthor.setText(String.valueOf(book.getAuthorId()));
+
+//        holder.tvNameAuthor.setText(book.getAuthorId());
+        String authorId = book.getAuthorId();
+        String authorName = authorMap.get(authorId); // Get the author name from the map
+        if (authorName != null) {
+            holder.tvNameAuthor.setText(authorName);
+        } else {
+            holder.tvNameAuthor.setText("Unknown Author");
+        }
+
     }
 
     @Override

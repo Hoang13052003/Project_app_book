@@ -12,23 +12,26 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.project_app_book.R;
 import com.example.project_app_book.model.AnimationUtil;
 import com.example.project_app_book.model.Book;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
 public class FragmentDetailBook extends Fragment {
 
     private Book book;
     private boolean isHeartSelected = false;
+    private HashMap<String, String> authorMap;
     private ImageView imgAvatarBook, ivHeart;
-    private TextView tvNameBook, tvReadBook;
+    private TextView tvNameBook, tvReadBook, tvAuthorName;
 
     public FragmentDetailBook() {
         // Required empty public constructor
@@ -41,11 +44,16 @@ public class FragmentDetailBook extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_detail_book, container, false);
         ImageView imageView = view.findViewById(R.id.imgAvatarBook);
+
         @SuppressLint("DiscouragedApi")
         int resourceId = container.getResources().getIdentifier(book.getImage(), "drawable", getContext().getPackageName());
         imageView.setImageResource(resourceId);
+
+        SharedViewModel sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        authorMap = sharedViewModel.getAuthorMap().getValue();
 
         addControls(view);
         addEvents(container, view);
@@ -58,6 +66,7 @@ public class FragmentDetailBook extends Fragment {
         tvReadBook = view.findViewById(R.id.tvReadBook);
         imgAvatarBook = view.findViewById(R.id.imgAvatarBook);
         tvNameBook = view.findViewById(R.id.tvNameBook);
+        tvAuthorName = view.findViewById(R.id.tvNameAuthor);
     }
 
     private void addEvents(ViewGroup container, View view) {
@@ -65,6 +74,7 @@ public class FragmentDetailBook extends Fragment {
         int resourceId = container.getResources().getIdentifier(book.getImage(), "drawable", getContext().getPackageName());
         imgAvatarBook.setImageResource(resourceId);
         tvNameBook.setText(book.getTitle());
+        tvAuthorName.setText(authorMap.get(book.getAuthorId()));
 
         ivHeart.setOnClickListener(new View.OnClickListener() {
             @Override
