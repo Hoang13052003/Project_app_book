@@ -12,11 +12,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.project_app_book.R;
+import com.example.project_app_book.model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -74,21 +79,36 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
-    private void authenticateUser(String email, String password) {
+    private void authenticateUser(final String email, final String password) {
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 boolean loginSuccess = false;
+                User loggedInUser = null;
+
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String dbEmail = snapshot.child("email").getValue(String.class);
                     String dbPassword = snapshot.child("password").getValue(String.class);
                     if (email.equals(dbEmail) && password.equals(dbPassword)) {
+                        String address = snapshot.child("address").getValue(String.class);
+                        String dateOfBirth = snapshot.child("dateOfBirth").getValue(String.class);
+                        String name = snapshot.child("name").getValue(String.class);
+                        String phone = snapshot.child("phone").getValue(String.class);
+
+                        Map<String, Boolean> favouriteMap = new HashMap<>();
+                        DataSnapshot favouritesSnapshot = snapshot.child("favourite");
+                        for (DataSnapshot favourite : favouritesSnapshot.getChildren()) {
+                            favouriteMap.put(favourite.getKey(), favourite.getValue(Boolean.class));
+                        }
+
+                        loggedInUser = new User(address, new ArrayList<>(favouriteMap.values()), dateOfBirth, dbEmail, name, dbPassword, phone);
                         loginSuccess = true;
                         break;
                     }
                 }
+
                 if (loginSuccess) {
-                    navigateToMainActivity();
+                    navigateToMainActivity(loggedInUser);
                 } else {
                     Toast.makeText(LoginActivity.this, "Login failed. Please check your credentials.", Toast.LENGTH_SHORT).show();
                 }
@@ -101,8 +121,9 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void navigateToMainActivity() {
+    private void navigateToMainActivity(User user) {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        intent.putExtra("loggedInUser", user);
         startActivity(intent);
         finish();
     }

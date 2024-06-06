@@ -1,5 +1,8 @@
 package com.example.project_app_book.view;
 
+import static android.content.Intent.getIntent;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +20,7 @@ import com.example.project_app_book.model.User;
 public class FragmentUser extends Fragment {
     private User user;
     private LinearLayout linearLayoutCircleIn, linearLayoutCircleOut, linearLayout_QR, linearLayout_ThongTinVeChungToi, linearLayout_DieuKhoanSuDung, linearLayout_ChinhSachBaoMat, linearLayout_LogOut, linearLayout_Delete_Account;
-    private TextView tvThongTinCaNhan;
+    private TextView tvThongTinCaNhan, tvNameUser;
 
 
     public FragmentUser() {
@@ -31,7 +34,9 @@ public class FragmentUser extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user, container, false);
-
+        if (getArguments() != null) {
+            user = (User) getArguments().getSerializable("loggedInUser");
+        }
         addControls(view);
 
         addEvents();
@@ -40,6 +45,7 @@ public class FragmentUser extends Fragment {
     }
 
     private void addControls(View view){
+        tvNameUser = view.findViewById(R.id.tvNameUser);
         tvThongTinCaNhan = view.findViewById(R.id.tvThongTinCaNhan);
         linearLayout_QR = view.findViewById(R.id.linearLayout_QR);
         linearLayoutCircleIn = view.findViewById(R.id.linearLayout_circle_in);
@@ -50,7 +56,9 @@ public class FragmentUser extends Fragment {
         linearLayout_ChinhSachBaoMat = view.findViewById(R.id.linearLayout_ChinhSachBaoMat);
         linearLayout_LogOut = view.findViewById(R.id.linearLayout_LogOut);
         linearLayout_Delete_Account = view.findViewById(R.id.linearLayout_Delete_Account);
-
+        if (user != null) {
+            tvNameUser.setText(user.getName());
+        }
 
 
     }
@@ -71,7 +79,12 @@ public class FragmentUser extends Fragment {
             public void onClick(View v) {
                 AnimationUtil.applyScaleAnimation(getContext(), linearLayout_QR);
                 FragmentDanhSachYeuThich frgYeuThich = new FragmentDanhSachYeuThich();
+                Intent intent = getActivity().getIntent(); // Get intent from hosting activity
+                user = (User) intent.getSerializableExtra("loggedInUser");
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("loggedInUser", user);
+                frgYeuThich.setArguments(bundle);
                 transaction.replace(R.id.fragLayoutLoad, frgYeuThich);
                 transaction.addToBackStack(null);
                 transaction.commit();

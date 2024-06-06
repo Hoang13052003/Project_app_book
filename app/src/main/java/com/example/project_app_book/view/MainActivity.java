@@ -1,6 +1,7 @@
 package com.example.project_app_book.view;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -11,10 +12,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.project_app_book.R;
+import com.example.project_app_book.model.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
+    private User loggedInUser;
 
     androidx.appcompat.widget.Toolbar actionBar;
     BottomNavigationView bottomNavigationView;
@@ -24,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         addControls();
-//        actionBar = ( androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbarBai1);
-//        setSupportActionBar(actionBar);
+        Intent intent = getIntent();
+        loggedInUser = (User) intent.getSerializableExtra("loggedInUser");
         addEvents();
     }
 
@@ -45,23 +48,28 @@ public class MainActivity extends AppCompatActivity {
         frameFragment = (FrameLayout) findViewById(R.id.frameFragment);
     }
 
-    void addEvents()
-    {
+    void addEvents() {
         loadFragment(new FragmentHome());
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
+                Fragment selectedFragment = null;
 
                 if (item.getItemId() == R.id.btnHome) {
-                    loadFragment(new FragmentHome());
-                    return true;
+                    selectedFragment = new FragmentHome();
+                } else if (item.getItemId() == R.id.btnCompass) {
+                    selectedFragment = new FragmentHome();
+                } else if (item.getItemId() == R.id.btnUser) {
+                    selectedFragment = new FragmentUser();
+                    if (selectedFragment != null) {
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("loggedInUser", loggedInUser);
+                        selectedFragment.setArguments(bundle);
+                    }
                 }
-                if (item.getItemId() == R.id.btnCompass) {
-                    loadFragment(new FragmentHome());
-                    return true;
-                }
-                if (item.getItemId() == R.id.btnUser) {
-                    loadFragment(new FragmentUser());
+
+                if (selectedFragment != null) {
+                    loadFragment(selectedFragment);
                     return true;
                 }
                 return false;

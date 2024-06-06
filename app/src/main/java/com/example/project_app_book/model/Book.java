@@ -1,12 +1,10 @@
 package com.example.project_app_book.model;
 
-import java.util.Map;
-
 public class Book {
     private String bookID;
     private String authorId;
     private String categoryId;
-    private Map<String, String> content;
+    private String content;
     private String description;
     private String image;
     private int publishedYear;
@@ -15,7 +13,7 @@ public class Book {
 
     public Book() {}
 
-    public Book(String bookID, String authorId, String categoryId, Map<String, String> content, String description, String image, int publishedYear, String publisherId, String title) {
+    public Book(String bookID, String authorId, String categoryId, String content, String description, String image, int publishedYear, String publisherId, String title) {
         this.bookID = bookID;
         this.authorId = authorId;
         this.categoryId = categoryId;
@@ -55,11 +53,11 @@ public class Book {
         this.categoryId = categoryId;
     }
 
-    public Map<String, String> getContent() {
+    public String getContent() {
         return content;
     }
 
-    public void setContent(Map<String, String> content) {
+    public void setContent(String content) {
         this.content = content;
     }
 
