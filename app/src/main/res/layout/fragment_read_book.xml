@@ -14,102 +14,10 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/tvContent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imgAvatarBook"
-                android:layout_width="141dp"
-                android:layout_height="212dp"
-                android:scaleType="centerCrop"
-                android:background="@drawable/boder_radius"
-                android:src="@drawable/sach19"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="?attr/actionBarSize"
-                app:shapeAppearanceOverlay="@style/boder_raius"/>
-
-            <TextView
-                android:id="@+id/tvNameBook"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="center"
-                android:padding="5dp"
-                android:textSize="20sp"
-                android:text="Giáo Trình Toeic 4 Kỹ Năng"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                />
-
-            <TextView
-                android:id="@+id/tvNameAuthor"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:gravity="center"
-                android:text="Robert T.Kiyosaky"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvDanhGia"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:text="4.8 (334 đánh giá)"
-                android:drawableStart="@drawable/ic_star"
-                android:textColor="@color/white"  />
-
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="10dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/imgYeuThich"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="10dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:importantForAccessibility="no"
-                    android:padding="2dp"
-                    android:src="@drawable/ic_heart_state"
-                    tools:ignore="TouchTargetSizeCheck" />
-
-                <TextView
-                    android:id="@+id/tvReadBook"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:background="@drawable/selector_boder_radius_textview"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/white"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:text="Bắt Đầu Đọc" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/background_not_radius_bottom"
-                >
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="600dp"/>
-            </LinearLayout>
-        </LinearLayout>
+            android:layout_height="match_parent"/>
     </ScrollView>
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_fragment_read_book"
