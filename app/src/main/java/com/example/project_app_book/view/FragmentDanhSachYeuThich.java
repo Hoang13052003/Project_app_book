@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_app_book.R;
 import com.example.project_app_book.model.Book;
+import com.example.project_app_book.model.User;
 import com.example.project_app_book.view.adapter.BookThreeRowRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -49,10 +50,10 @@ public class FragmentDanhSachYeuThich extends Fragment {
 
         addControls(view);
 
+        User user = (User)getArguments().getSerializable("loggedInUser");
 
-
-        String userId = "user1";
-        userFavoritesRef = FirebaseDatabase.getInstance().getReference("user").child(userId).child("favourite");
+//        String userId = "user1";
+        userFavoritesRef = FirebaseDatabase.getInstance().getReference("user").child(user.getUserID()).child("favourite");
         booksRef = FirebaseDatabase.getInstance().getReference("books");
 
         addEvents(view);

@@ -57,8 +57,18 @@ public class MainActivity extends AppCompatActivity {
 
                 if (item.getItemId() == R.id.btnHome) {
                     selectedFragment = new FragmentHome();
-                } else if (item.getItemId() == R.id.btnCompass) {
-                    selectedFragment = new FragmentHome();
+                    if (selectedFragment != null) {
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("loggedInUser", loggedInUser);
+                        selectedFragment.setArguments(bundle);
+                    }
+                } else if (item.getItemId() == R.id.btnSearch) {
+                    selectedFragment = new FragmentSearch();
+                    if (selectedFragment != null) {
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("loggedInUser", loggedInUser);
+                        selectedFragment.setArguments(bundle);
+                    }
                 } else if (item.getItemId() == R.id.btnUser) {
                     selectedFragment = new FragmentUser();
                     if (selectedFragment != null) {

@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.project_app_book.R;
 import com.example.project_app_book.model.AnimationUtil;
 import com.example.project_app_book.model.Book;
+import com.example.project_app_book.model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,6 +47,8 @@ public class FragmentDetailBook extends Fragment {
     private LinearLayout linear;
     private OkHttpClient client;
 
+    private User user;
+
     public FragmentDetailBook() {
         // Required empty public constructor
     }
@@ -58,11 +61,16 @@ public class FragmentDetailBook extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail_book, container, false);
+
+
+        addControls(view);
         ImageView imageView = view.findViewById(R.id.imgAvatarBook);
 
         // Khởi tạo client ở đây
         client = new OkHttpClient();
-
+        if (getArguments() != null) {
+            user = (User) getArguments().getSerializable("loggedInUser");
+        }
         @SuppressLint("DiscouragedApi")
         int resourceId = container.getResources().getIdentifier(book.getImage(), "drawable", getContext().getPackageName());
         imageView.setImageResource(resourceId);
@@ -70,10 +78,10 @@ public class FragmentDetailBook extends Fragment {
         SharedViewModel sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         authorMap = sharedViewModel.getAuthorMap().getValue();
 
-        addControls(view);
         addEvents(container, view);
         checkFavoriteStatus();
-        fetchBookContent("https://www.gutenberg.org/files/2701/2701-0.txt");
+//        fetchBookContent("https://www.gutenberg.org/files/2701/2701-0.txt");
+        fetchBookContent(book.getContent());
 
         return view;
     }
@@ -111,39 +119,43 @@ public class FragmentDetailBook extends Fragment {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()) {
                     final String content = response.body().string();
-                    requireActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            String[] newa = splitString(content, 5000);
-                            Toast.makeText(getContext(), String.valueOf(newa.length), Toast.LENGTH_SHORT).show();
+                    if (isAdded()) { // Kiểm tra xem fragment có đang được gắn vào activity hay không
+                        requireActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                String[] newa = splitString(content, 5000);
+                                Toast.makeText(getContext(), String.valueOf(newa.length), Toast.LENGTH_SHORT).show();
 
-                            Button[] btnWord = new Button[newa.length];
-                            for (int i = 0; i < newa.length; i++) {
-                                btnWord[i] = new Button(getContext());
-                                btnWord[i].setHeight(50);
-                                btnWord[i].setWidth(50);
-                                btnWord[i].setTag(i);
-                                btnWord[i].setText("Part " + (i + 1));
-                                linear.addView(btnWord[i]);
+                                Button[] btnWord = new Button[newa.length];
+                                for (int i = 0; i < newa.length; i++) {
+                                    btnWord[i] = new Button(getContext());
+                                    btnWord[i].setHeight(50);
+                                    btnWord[i].setWidth(50);
+                                    btnWord[i].setTag(i);
+                                    btnWord[i].setText("Part " + (i + 1));
+                                    linear.addView(btnWord[i]);
 
-                                int finalI = i;
-                                btnWord[i].setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        openContentFragment(newa[finalI]);
-                                    }
-                                });
+                                    int finalI = i;
+                                    btnWord[i].setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            openContentFragment(newa[finalI]);
+                                        }
+                                    });
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 } else {
-                    requireActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            TextView tvNoiDung = getView().findViewById(R.id.tvNoiDung);
-                            tvNoiDung.setText("Failed to fetch content. Response code: " + response.code());
-                        }
-                    });
+                    if (isAdded()) { // Kiểm tra xem fragment có đang được gắn vào activity hay không
+                        requireActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                TextView tvNoiDung = getView().findViewById(R.id.tvNoiDung);
+                                tvNoiDung.setText("Failed to fetch content. Response code: " + response.code());
+                            }
+                        });
+                    }
                 }
             }
 
@@ -206,8 +218,9 @@ public class FragmentDetailBook extends Fragment {
             return;
         }
 
-        String userId = "user1";
-        DatabaseReference favoritesRef = FirebaseDatabase.getInstance().getReference("user").child(userId).child("favourite");
+//        String userId = "user1";
+//        User user = (User)getArguments().getSerializable("loggedInUser");
+        DatabaseReference favoritesRef = FirebaseDatabase.getInstance().getReference("user").child(user.getUserID()).child("favourite");
 
         favoritesRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -236,8 +249,8 @@ public class FragmentDetailBook extends Fragment {
             return;
         }
 
-        String userId = "user1";
-        DatabaseReference favoritesRef = FirebaseDatabase.getInstance().getReference("user").child(userId).child("favourite");
+//        String userId = "user1";
+        DatabaseReference favoritesRef = FirebaseDatabase.getInstance().getReference("user").child(user.getUserID()).child("favourite");
 
         if (isHeartSelected) {
             favoritesRef.child(book.getBookID()).removeValue().addOnCompleteListener(task -> {

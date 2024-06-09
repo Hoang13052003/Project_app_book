@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,6 +27,8 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText editTextPassword, editTextEmail;
+
+    private TextView tvDangKy;
     private Button btnLogin;
     private DatabaseReference userRef;
 
@@ -39,19 +42,26 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initializeControls() {
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        userRef = db.getReference("user");
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         btnLogin = findViewById(R.id.btnLogin);
-
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
-        userRef = db.getReference("user");
+        tvDangKy = findViewById(R.id.tvRegister);
     }
+
 
     private void initializeEvents() {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 handleLogin();
+            }
+        });
+        tvDangKy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
     }
@@ -85,11 +95,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 boolean loginSuccess = false;
                 User loggedInUser = null;
-
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String dbEmail = snapshot.child("email").getValue(String.class);
                     String dbPassword = snapshot.child("password").getValue(String.class);
                     if (email.equals(dbEmail) && password.equals(dbPassword)) {
+                        String userID = snapshot.getKey();
                         String address = snapshot.child("address").getValue(String.class);
                         String dateOfBirth = snapshot.child("dateOfBirth").getValue(String.class);
                         String name = snapshot.child("name").getValue(String.class);
@@ -101,7 +111,7 @@ public class LoginActivity extends AppCompatActivity {
                             favouriteMap.put(favourite.getKey(), favourite.getValue(Boolean.class));
                         }
 
-                        loggedInUser = new User(address, new ArrayList<>(favouriteMap.values()), dateOfBirth, dbEmail, name, dbPassword, phone);
+                        loggedInUser = new User(userID,address, new ArrayList<>(favouriteMap.values()), dateOfBirth, dbEmail, name, dbPassword, phone);
                         loginSuccess = true;
                         break;
                     }

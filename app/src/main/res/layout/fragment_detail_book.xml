@@ -7,16 +7,15 @@
     android:background="@drawable/bacground_gradian_vertical"
     tools:context=".view.FragmentDetailBook">
 
-
-
-
-
     <ScrollView
+        android:layout_marginTop="50dp"
         android:id="@+id/scrollview_detail"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="80dp">
 
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -28,7 +27,7 @@
                 android:background="@drawable/boder_radius"
                 android:src="@drawable/sach19"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="?attr/actionBarSize"
+                android:layout_marginTop="10dp"
                 app:shapeAppearanceOverlay="@style/boder_raius"/>
 
             <TextView
@@ -114,7 +113,8 @@
                     android:maxLines="10"
                     android:padding="10dp" />
             </LinearLayout>
-        </LinearLayout>
+        </LinearLayout
+            >
     </ScrollView>
 
     <androidx.appcompat.widget.Toolbar

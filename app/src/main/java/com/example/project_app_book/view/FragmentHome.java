@@ -1,6 +1,7 @@
 package com.example.project_app_book.view;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.example.project_app_book.model.AnimationUtil;
 import com.example.project_app_book.model.Author;
 import com.example.project_app_book.model.Book;
 import com.example.project_app_book.model.CategoryBook;
+import com.example.project_app_book.model.User;
 import com.example.project_app_book.view.adapter.AuthorRecyclerAdapter;
 import com.example.project_app_book.view.adapter.BookRecyclerAdapter;
 import com.example.project_app_book.view.adapter.BookThreeRowRecyclerAdapter;
@@ -43,6 +45,8 @@ public class FragmentHome extends Fragment {
     private ListView lvCategoryBook;
     private LinearLayout linearLayout_item_home_1, linearLayout_item_home_2;
     HashMap<String, String> authorMap;
+
+    private User user;
     public FragmentHome() {
         // Required empty public constructor
     }
@@ -53,8 +57,12 @@ public class FragmentHome extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
-
+        Intent intent = getActivity().getIntent(); // Get intent from hosting activity
+        user = (User) intent.getSerializableExtra("loggedInUser");
         addControls(view);
+
+
+
         addEvents();
         return view;
     }
@@ -165,10 +173,7 @@ public class FragmentHome extends Fragment {
                     authorRecyclerAdapter.setOnItemClickListener(new AuthorRecyclerAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(Author author) {
-
-
-
-
+                            loadFragment(new FragmentSachTheoTacGia(author));
                         }
                     });
                     lvCategoryBook.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -229,6 +234,9 @@ public class FragmentHome extends Fragment {
     private void loadFragment(Fragment fragment){
         // Thực hiện việc chuyển đổi fragment
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("loggedInUser", user);
+        fragment.setArguments(bundle);
         transaction.replace(R.id.fragLayoutLoad, fragment); // fragment_container là id của FrameLayout trong activity_main.xml
         transaction.addToBackStack(null); // thêm transaction vào back stack để có thể quay lại fragment trước đó
         transaction.commit();

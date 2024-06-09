@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class User implements Serializable {
+    private String userID;
     private String address;
     private List<Boolean> collection;
     private String dateOfBirth;
@@ -18,6 +19,18 @@ public class User implements Serializable {
 
     // Parameterized constructor
     public User(String address, List<Boolean> collection, String dateOfBirth, String email, String name, String password, String phone) {
+        this.address = address;
+        this.collection = collection;
+        this.dateOfBirth = dateOfBirth;
+        this.email = email;
+        this.name = name;
+        this.password = password;
+        this.phone = phone;
+    }
+
+
+    public User(String userID, String address, List<Boolean> collection, String dateOfBirth, String email, String name, String password, String phone) {
+        this.userID = userID;
         this.address = address;
         this.collection = collection;
         this.dateOfBirth = dateOfBirth;
@@ -82,6 +95,14 @@ public class User implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
     @Override
