@@ -20,7 +20,6 @@ import java.util.ArrayList;
 public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapter.ViewHolder> {
 
     private ArrayList<Book> bookList;
-//    private ArrayList<Author> authorArrayList;
 
     private Context context;
     private int layoutResource;
@@ -51,9 +50,6 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
         public ViewHolder(View itemView) {
             super(itemView);
             imgAvatarBook = itemView.findViewById(R.id.imgAvatarBook);
-//            tvNameBook = itemView.findViewById(R.id.tvNameBook);
-//            tvNameAuthor = itemView.findViewById(R.id.tvNameAuthor);
-            // 4. Thiết lập sự kiện nhấn vào mục
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -73,7 +69,6 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
         }
     }
 
-    // Create new views (invoked by the layout manager)
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -87,8 +82,6 @@ public class BookRecyclerAdapter extends RecyclerView.Adapter<BookRecyclerAdapte
 
         @SuppressLint("DiscouragedApi") int resourceId = context.getResources().getIdentifier(book.getImage(), "drawable", context.getPackageName());
         holder.imgAvatarBook.setImageResource(resourceId);
-//        holder.tvNameBook.setText(book.getTitle());
-//        holder.tvNameAuthor.setText(book.getAuthorId());
 
     }
 

@@ -31,17 +31,14 @@ public class BookRecyclerAdapterHorizental extends RecyclerView.Adapter<BookRecy
         this.layoutResource = layoutResource;
     }
 
-    // Interface to handle item click events
     public interface OnItemClickListener {
         void onItemClick(Book book);
     }
 
-    // Method to set the listener
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 
-    // ViewHolder class
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView imgAvatarBook;
         public TextView tvNameBook, tvNameAuthor;
@@ -52,18 +49,15 @@ public class BookRecyclerAdapterHorizental extends RecyclerView.Adapter<BookRecy
             tvNameBook = itemView.findViewById(R.id.tvNameBook);
             tvNameAuthor = itemView.findViewById(R.id.tvNameAuthor);
 
-            // Set item click listener
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (listener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            // Apply scale animation
                             AnimationUtil.applyScaleAnimation(context, v, new AnimationUtil.AnimationListener() {
                                 @Override
                                 public void onAnimationEnd() {
-                                    // Handle item click
                                     listener.onItemClick(bookList.get(position));
                                 }
                             });
@@ -74,7 +68,6 @@ public class BookRecyclerAdapterHorizental extends RecyclerView.Adapter<BookRecy
         }
     }
 
-    // Create new views (invoked by the layout manager)
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -86,11 +79,9 @@ public class BookRecyclerAdapterHorizental extends RecyclerView.Adapter<BookRecy
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Book book = bookList.get(position);
 
-        // Set image resource
         int resourceId = context.getResources().getIdentifier(book.getImage(), "drawable", context.getPackageName());
         holder.imgAvatarBook.setImageResource(resourceId);
 
-        // Set book title
         holder.tvNameBook.setText(book.getTitle());
 
     }

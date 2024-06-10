@@ -36,9 +36,9 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (fragmentManager.getBackStackEntryCount() > 0) {
-            fragmentManager.popBackStack(); // Pop the back stack to go to the previous fragment
+            fragmentManager.popBackStack();
         } else {
-            super.onBackPressed(); // Otherwise, perform the default back action
+            super.onBackPressed();
         }
     }
     void addControls()

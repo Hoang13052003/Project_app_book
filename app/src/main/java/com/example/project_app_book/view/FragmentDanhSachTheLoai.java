@@ -71,7 +71,6 @@ public class FragmentDanhSachTheLoai extends Fragment {
     public void addControls(View view)
     {
         recycle_view_categories = view.findViewById(R.id.recycler_view_category);
-//        bookThreeRowRecyclerAdapter = new BookThreeRowRecyclerAdapter(getContext(), listBook, R.layout.layout_item_colum_book_favourite);
         bookThreeRowRecyclerAdapter = new BookThreeRowRecyclerAdapter(getContext(), listBook, R.layout.layout_item_colum_book_favourite,authorMap);
         recycle_view_categories.setAdapter(bookThreeRowRecyclerAdapter);
     }

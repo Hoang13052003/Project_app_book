@@ -43,14 +43,12 @@ public class FragmentDetailBook extends Fragment {
     private HashMap<String, String> authorMap;
     private ImageView imgAvatarBook, ivHeart;
     private TextView tvNameBook, tvReadBook, tvAuthorName;
-    private ScrollView scrollView;
     private LinearLayout linear;
     private OkHttpClient client;
 
     private User user;
 
     public FragmentDetailBook() {
-        // Required empty public constructor
     }
 
     public FragmentDetailBook(Book item) {
@@ -80,7 +78,6 @@ public class FragmentDetailBook extends Fragment {
 
         addEvents(container, view);
         checkFavoriteStatus();
-//        fetchBookContent("https://www.gutenberg.org/files/2701/2701-0.txt");
         fetchBookContent(book.getContent());
 
         return view;
@@ -93,7 +90,6 @@ public class FragmentDetailBook extends Fragment {
         imgAvatarBook = view.findViewById(R.id.imgAvatarBook);
         tvNameBook = view.findViewById(R.id.tvNameBook);
         tvAuthorName = view.findViewById(R.id.tvNameAuthor);
-        scrollView = view.findViewById(R.id.scrollview_detail);
         linear = view.findViewById(R.id.linear);
     }
 
@@ -143,6 +139,17 @@ public class FragmentDetailBook extends Fragment {
                                         }
                                     });
                                 }
+                                tvReadBook.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        AnimationUtil.applyScaleAnimation(getContext(), tvReadBook, new AnimationUtil.AnimationListener() {
+                                            @Override
+                                            public void onAnimationEnd() {
+                                                openContentFragment(newa[0]);
+                                            }
+                                        });
+                                    }
+                                });
                             }
                         });
                     }
@@ -186,11 +193,9 @@ public class FragmentDetailBook extends Fragment {
                 AnimationUtil.applyScaleAnimation(getContext(), tvReadBook, new AnimationUtil.AnimationListener() {
                     @Override
                     public void onAnimationEnd() {
-//                        FragmentReadBook fragmentReadBook = new FragmentReadBook(book, 1);
-//                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-//                        transaction.replace(R.id.fragLayoutLoad, fragmentReadBook);
-//                        transaction.addToBackStack(null);
-//                        transaction.commit();
+//
+
+
                     }
                 });
             }
@@ -212,14 +217,11 @@ public class FragmentDetailBook extends Fragment {
     }
 
     private void checkFavoriteStatus() {
-        // Ensure bookID is not null
         if (book == null) {
             Toast.makeText(getContext(), "Invalid book data in check", Toast.LENGTH_SHORT).show();
             return;
         }
 
-//        String userId = "user1";
-//        User user = (User)getArguments().getSerializable("loggedInUser");
         DatabaseReference favoritesRef = FirebaseDatabase.getInstance().getReference("user").child(user.getUserID()).child("favourite");
 
         favoritesRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -237,19 +239,16 @@ public class FragmentDetailBook extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Handle error
             }
         });
     }
 
     private void toggleFavoriteStatus() {
-        // Ensure bookID is not null
         if (book == null || book.getBookID() == null) {
             Toast.makeText(getContext(), "Invalid book data in toggle", Toast.LENGTH_SHORT).show();
             return;
         }
 
-//        String userId = "user1";
         DatabaseReference favoritesRef = FirebaseDatabase.getInstance().getReference("user").child(user.getUserID()).child("favourite");
 
         if (isHeartSelected) {

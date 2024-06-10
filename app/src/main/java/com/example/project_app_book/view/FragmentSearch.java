@@ -58,7 +58,7 @@ public class FragmentSearch extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
         addControls(view);
-        Intent intent = getActivity().getIntent(); // Get intent from hosting activity
+        Intent intent = getActivity().getIntent();
         user = (User) intent.getSerializableExtra("loggedInUser");
         addEvents(view);
         return view;

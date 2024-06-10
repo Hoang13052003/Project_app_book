@@ -7,6 +7,7 @@
     <color name="background_gradient_start">#7469B6</color> <!-- Màu bắt đầu của gradient -->
     <color name="background_gradient_end">#AD88C6</color>
     <color name="gray">#B3AEAE</color>
+    <color name="lavender">#8692f7</color>
     <color name="colorPrimary">#2196F3</color>
 
 </resources>
