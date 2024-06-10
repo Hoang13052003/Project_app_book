@@ -188,10 +188,11 @@ public class FragmentHome extends Fragment {
                             // Truyền thể loại đã chọn vào fragment
                             Bundle bundle = new Bundle();
                             bundle.putString("category", selectedCategoryKey);
+                            bundle.putSerializable("loggedInUser", user);
                             fragmentDanhSachTheLoai.setArguments(bundle);
 
                             // Hiển thị fragment
-                            loadFragment(fragmentDanhSachTheLoai);
+                            loadFragment_category(fragmentDanhSachTheLoai);
                         }
                     });
                 } else {
@@ -237,6 +238,13 @@ public class FragmentHome extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putSerializable("loggedInUser", user);
         fragment.setArguments(bundle);
+        transaction.replace(R.id.fragLayoutLoad, fragment); // fragment_container là id của FrameLayout trong activity_main.xml
+        transaction.addToBackStack(null); // thêm transaction vào back stack để có thể quay lại fragment trước đó
+        transaction.commit();
+    }
+    private void loadFragment_category(Fragment fragment){
+        // Thực hiện việc chuyển đổi fragment
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragLayoutLoad, fragment); // fragment_container là id của FrameLayout trong activity_main.xml
         transaction.addToBackStack(null); // thêm transaction vào back stack để có thể quay lại fragment trước đó
         transaction.commit();

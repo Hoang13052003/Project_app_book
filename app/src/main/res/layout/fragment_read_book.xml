@@ -9,15 +9,18 @@
 
 
     <ScrollView
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="90dp">
+        android:background="@drawable/background_radius_bottom_navigation"
+        android:paddingTop="20dp"
+        android:paddingBottom="100dp">
 
         <TextView
             android:id="@+id/tvContent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:padding="20dp"/>
     </ScrollView>
 
     <androidx.appcompat.widget.Toolbar

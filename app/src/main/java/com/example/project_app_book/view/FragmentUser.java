@@ -17,7 +17,7 @@ import com.example.project_app_book.model.User;
 
 public class FragmentUser extends Fragment {
     private User user;
-    private LinearLayout linearLayoutCircleIn, linearLayoutCircleOut, linearLayout_QR, linearLayout_ThongTinVeChungToi, linearLayout_DieuKhoanSuDung, linearLayout_ChinhSachBaoMat, linearLayout_LogOut, linearLayout_Delete_Account;
+    private LinearLayout linearLayoutCircleIn, linearLayoutCircleOut, linearLayout_QR, linearLayout_LogOut, linearLayout_Delete_Account;
     private TextView tvThongTinCaNhan, tvNameUser;
 
 
@@ -30,7 +30,6 @@ public class FragmentUser extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user, container, false);
         if (getArguments() != null) {
             user = (User) getArguments().getSerializable("loggedInUser");
@@ -48,10 +47,6 @@ public class FragmentUser extends Fragment {
         linearLayout_QR = view.findViewById(R.id.linearLayout_QR);
         linearLayoutCircleIn = view.findViewById(R.id.linearLayout_circle_in);
         linearLayoutCircleOut = view.findViewById(R.id.linearLayout_circle_out);
-
-        linearLayout_ThongTinVeChungToi = view.findViewById(R.id.linearLayout_ThongTinVeChungToi);
-        linearLayout_DieuKhoanSuDung = view.findViewById(R.id.linearLayout_DieuKhoanSuDung);
-        linearLayout_ChinhSachBaoMat = view.findViewById(R.id.linearLayout_ChinhSachBaoMat);
         linearLayout_LogOut = view.findViewById(R.id.linearLayout_LogOut);
         linearLayout_Delete_Account = view.findViewById(R.id.linearLayout_Delete_Account);
         if (user != null) {
@@ -69,7 +64,11 @@ public class FragmentUser extends Fragment {
             @Override
             public void onClick(View v) {
                 AnimationUtil.applyScaleAnimation(getContext(), tvThongTinCaNhan);
-
+                InfoUserFragment infoUserFragment = new InfoUserFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("loggedInUser", user);
+                infoUserFragment.setArguments(bundle);
+                loadFragment(infoUserFragment);
             }
         });
         linearLayout_QR.setOnClickListener(new View.OnClickListener() {
@@ -88,24 +87,6 @@ public class FragmentUser extends Fragment {
                 transaction.commit();
             }
         });
-        linearLayout_ThongTinVeChungToi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AnimationUtil.applyScaleAnimation(getContext(), linearLayout_ThongTinVeChungToi);
-            }
-        });
-        linearLayout_DieuKhoanSuDung.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AnimationUtil.applyScaleAnimation(getContext(), linearLayout_DieuKhoanSuDung);
-            }
-        });
-        linearLayout_ChinhSachBaoMat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AnimationUtil.applyScaleAnimation(getContext(), linearLayout_ChinhSachBaoMat);
-            }
-        });
         linearLayout_LogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,5 +99,11 @@ public class FragmentUser extends Fragment {
                 AnimationUtil.applyScaleAnimation(getContext(), linearLayout_Delete_Account);
             }
         });
+    }
+    private void loadFragment(Fragment fragment){
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragLayoutLoad, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

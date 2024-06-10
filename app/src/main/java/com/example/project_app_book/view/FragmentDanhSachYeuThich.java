@@ -44,15 +44,13 @@ public class FragmentDanhSachYeuThich extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_danh_sach_yeu_thich, container, false);
-        //lấy thông tin tác giá từ database realtime: ID và Tên Tác Giả
+
         SharedViewModel sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         authorMap = sharedViewModel.getAuthorMap().getValue();
 
         addControls(view);
 
         User user = (User)getArguments().getSerializable("loggedInUser");
-
-//        String userId = "user1";
         userFavoritesRef = FirebaseDatabase.getInstance().getReference("user").child(user.getUserID()).child("favourite");
         booksRef = FirebaseDatabase.getInstance().getReference("books");
 
@@ -128,10 +126,9 @@ public class FragmentDanhSachYeuThich extends Fragment {
     }
 
     private void loadFragment(Fragment fragment){
-        // Thực hiện việc chuyển đổi fragment
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragLayoutLoad, fragment); // fragment_container là id của FrameLayout trong activity_main.xml
-        transaction.addToBackStack(null); // thêm transaction vào back stack để có thể quay lại fragment trước đó
+        transaction.replace(R.id.fragLayoutLoad, fragment);
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 }
