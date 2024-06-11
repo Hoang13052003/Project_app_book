@@ -44,6 +44,9 @@ public class UpdatePassFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_update_pass, container, false);
         addControls(view);
+        if (getArguments() != null) {
+            user = (User) getArguments().getSerializable("loggedInUser");
+        }
         userLoggedIn = FirebaseDatabase.getInstance().getReference("user").child(user.getUserID());
 
         addEvent();

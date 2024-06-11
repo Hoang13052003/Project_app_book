@@ -77,6 +77,8 @@ public class FragmentUser extends Fragment {
             public void onClick(View v) {
                 AnimationUtil.applyScaleAnimation(getContext(), tvThongTinCaNhan);
                 InfoUserFragment infoUserFragment = new InfoUserFragment();
+                Intent intent = getActivity().getIntent();
+                user = (User) intent.getSerializableExtra("loggedInUser");
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("loggedInUser", user);
                 infoUserFragment.setArguments(bundle);
