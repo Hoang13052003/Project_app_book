@@ -36,6 +36,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.stream.Collectors;
+
 public class FragmentHome extends Fragment {
 //    private ImageView imageViewAnh;
     private ArrayList<Book> listBook = new ArrayList<>();
@@ -137,8 +139,8 @@ public class FragmentHome extends Fragment {
 
                     // Cập nhật adapter sau khi dữ liệu thay đổi
 
-                    BookRecyclerAdapter bookRecyclerAdapterTopBook = new BookRecyclerAdapter(getActivity(), listBook, R.layout.layout_item_colum_book_popular);
-                    BookThreeRowRecyclerAdapter bookRecyclerAdapterNewBook = new BookThreeRowRecyclerAdapter(getActivity(), listBook, R.layout.layout_item_colum_book_3_row, authorMap);
+                    BookRecyclerAdapter bookRecyclerAdapterTopBook = new BookRecyclerAdapter(getActivity(), (ArrayList<Book>) listBook.stream().limit(10).collect(Collectors.toList()), R.layout.layout_item_colum_book_popular);
+                    BookThreeRowRecyclerAdapter bookRecyclerAdapterNewBook = new BookThreeRowRecyclerAdapter(getActivity(), (ArrayList<Book>) listBook.stream().limit(10).collect(Collectors.toList()), R.layout.layout_item_colum_book_3_row, authorMap);
                     BookRecyclerAdapter bookRecyclerAdapter = new BookRecyclerAdapter(getActivity(), listBook, R.layout.layout_item_colum_book);
                     AuthorRecyclerAdapter authorRecyclerAdapter = new AuthorRecyclerAdapter(getActivity(), listAuthor, R.layout.layout_item_author);
                     CategoryBookAdapter categoryBookAdapter = new CategoryBookAdapter(getActivity(), listCategoryBook, R.layout.layout_row_category_book);
